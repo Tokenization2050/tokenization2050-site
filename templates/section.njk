@@ -1,0 +1,36 @@
+{% extends "base.njk" %}
+
+{% block title %}{{ section.name }} — Tokenization 2050{% endblock %}
+{% block description %}{{ section.description }}{% endblock %}
+{% block ogTitle %}{{ section.name }} — Tokenization 2050{% endblock %}
+{% block ogDescription %}{{ section.description }}{% endblock %}
+{% block ogUrl %}{{ config.site.url }}/{{ section.slug }}/{% endblock %}
+{% block canonical %}{{ config.site.url }}/{{ section.slug }}/{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="section-page">
+    <header class="section-page-header">
+      <h1>{{ section.name }}</h1>
+      <p>{{ section.description }}</p>
+    </header>
+
+    {% if articles and articles.length > 0 %}
+    <ul class="section-articles-list">
+      {% for article in articles %}
+      <li>
+        {% if article.isSample %}<div class="sample-banner" style="margin-bottom: 8px; text-align: left; font-size: 0.75rem;">SAMPLE</div>{% endif %}
+        <h3><a href="/{{ article.section }}/{{ article.id }}/">{{ article.title | replace("[SAMPLE] ", "") }}</a></h3>
+        <p class="article-excerpt">{{ article.summary }}</p>
+        <p class="meta">{{ config.site.byline }} · {{ article.dateFormatted }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="section-empty">
+      <p>No articles in this section yet. Check back soon.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

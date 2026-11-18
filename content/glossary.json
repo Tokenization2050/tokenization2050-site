@@ -1,0 +1,92 @@
+{
+  "terms": [
+    {
+      "term": "Asset-Referenced Token (ART)",
+      "definition": "A type of crypto-asset defined under the EU's MiCA regulation that maintains a stable value by referencing multiple currencies, commodities, or other assets. Distinguished from e-money tokens, which reference a single fiat currency."
+    },
+    {
+      "term": "Atomic Settlement",
+      "definition": "A settlement mechanism where the exchange of two assets (e.g., a security and payment) occurs simultaneously in a single, indivisible transaction. If either leg fails, the entire transaction is reversed. Eliminates settlement risk."
+    },
+    {
+      "term": "BUIDL",
+      "definition": "BlackRock USD Institutional Digital Liquidity Fund. A tokenized money-market fund issued on the Ethereum blockchain via Securitize, investing in short-term U.S. Treasury bills and repurchase agreements."
+    },
+    {
+      "term": "Central Securities Depository (CSD)",
+      "definition": "An institution that holds securities in dematerialised (book-entry) form and processes securities transactions. Examples include Euroclear, Clearstream, and DTCC. Tokenization may complement or eventually replace some CSD functions."
+    },
+    {
+      "term": "Delivery versus Payment (DvP)",
+      "definition": "A settlement mechanism ensuring that the transfer of a security occurs only if the corresponding payment is made, and vice versa. In tokenized markets, DvP can be achieved atomically via smart contracts."
+    },
+    {
+      "term": "Digital Bond",
+      "definition": "A bond instrument issued, recorded, and settled using distributed ledger technology. The bond's terms (coupon, maturity, denomination) may be encoded in smart contracts. Issuers include the European Investment Bank, World Bank, and several commercial banks."
+    },
+    {
+      "term": "Distributed Ledger Technology (DLT)",
+      "definition": "A digital system for recording, sharing, and synchronising data across multiple locations without a central administrator. Blockchain is the most common form of DLT. Used as the infrastructure layer for tokenized assets."
+    },
+    {
+      "term": "E-Money Token (EMT)",
+      "definition": "A type of crypto-asset defined under MiCA that represents a claim on the issuer and is denominated in a single fiat currency. Functionally equivalent to a stablecoin pegged to one currency. Examples: USDC, EURC."
+    },
+    {
+      "term": "ERC-20",
+      "definition": "A technical standard for fungible tokens on the Ethereum blockchain. Most tokenized assets, stablecoins, and fund tokens are issued as ERC-20 tokens. Defines basic functions like transfer, balance, and approval."
+    },
+    {
+      "term": "Fractionalization",
+      "definition": "The process of dividing an asset into smaller, tradeable units using tokenization. Enables investors to buy fractions of otherwise indivisible assets such as real estate, art, or private equity positions."
+    },
+    {
+      "term": "MiCA (Markets in Crypto-Assets Regulation)",
+      "definition": "The European Union's comprehensive regulatory framework for crypto-assets, adopted in 2023 and entering full application in 2024–2025. Covers stablecoins (EMTs and ARTs), crypto-asset service providers (CASPs), and market integrity."
+    },
+    {
+      "term": "Permissioned Blockchain",
+      "definition": "A blockchain network where participation (reading, writing, or validating transactions) is restricted to authorised entities. Used by most institutional tokenization platforms (e.g., JPMorgan Onyx, HSBC Orion) for compliance and privacy."
+    },
+    {
+      "term": "Real-World Assets (RWA)",
+      "definition": "Physical or traditional financial assets that are represented on a blockchain through tokenization. Includes government bonds, corporate debt, real estate, commodities, equities, and fund shares. Distinguished from crypto-native assets like Bitcoin or Ether."
+    },
+    {
+      "term": "Security Token",
+      "definition": "A digital token that represents ownership of a regulated security (equity, debt, fund share, or derivative). Subject to securities law in most jurisdictions. Distinguished from utility tokens, which provide access to a service."
+    },
+    {
+      "term": "Security Token Offering (STO)",
+      "definition": "A regulated fundraising mechanism where security tokens are issued to investors, typically under securities law exemptions. Analogous to an IPO or bond issuance but using blockchain infrastructure."
+    },
+    {
+      "term": "Smart Contract",
+      "definition": "A self-executing programme stored on a blockchain that automatically enforces the terms of an agreement when predefined conditions are met. Used in tokenization for dividend distribution, compliance checks, and settlement."
+    },
+    {
+      "term": "Stablecoin",
+      "definition": "A crypto-asset designed to maintain a stable value relative to a reference asset, typically a fiat currency. Stablecoins serve as the primary settlement and payment currency in tokenized asset markets. Major examples: USDT, USDC, DAI."
+    },
+    {
+      "term": "T+0 / T+1 / T+2",
+      "definition": "Settlement cycle notation indicating the number of business days between trade execution (T) and final settlement. Traditional securities settle at T+2 or T+1. Tokenized securities can achieve T+0 (same-day) or near-instant settlement."
+    },
+    {
+      "term": "Tokenization",
+      "definition": "The process of creating a digital representation of a real-world asset on a distributed ledger (blockchain). The resulting token represents ownership rights, economic interests, or claims on the underlying asset, and can be transferred, traded, or used as collateral on-chain."
+    },
+    {
+      "term": "Transfer Agent",
+      "definition": "An entity responsible for maintaining records of security ownership and processing transfers. In tokenized markets, this role is performed by platforms like Securitize, which manage on-chain share registries and investor compliance (KYC/AML)."
+    },
+    {
+      "term": "Tokenized Fund",
+      "definition": "An investment fund whose shares or units are issued as digital tokens on a blockchain. Enables real-time NAV transparency, instant subscription and redemption, and programmable dividend distribution. Examples: BlackRock BUIDL, Franklin Templeton BENJI."
+    },
+    {
+      "term": "Wrapped Token",
+      "definition": "A token on one blockchain that represents an asset native to another blockchain or system. Used to bridge assets across chains. Example: Wrapped Bitcoin (WBTC) represents BTC on the Ethereum network."
+    }
+  ]
+}

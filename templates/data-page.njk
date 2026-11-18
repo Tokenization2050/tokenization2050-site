@@ -1,0 +1,56 @@
+{% extends "base.njk" %}
+
+{% block title %}Data — Key RWA Figures — Tokenization 2050{% endblock %}
+{% block description %}Key figures and data on tokenized real-world assets, including treasuries, stablecoins, private credit, bonds, and real estate.{% endblock %}
+{% block ogTitle %}Data — Tokenization 2050{% endblock %}
+{% block ogUrl %}{{ config.site.url }}/data/{% endblock %}
+{% block canonical %}{{ config.site.url }}/data/{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="data-page">
+    <h1>Data</h1>
+    <p>Key figures on tokenized real-world assets. Sample data for demonstration purposes.</p>
+
+    {% if data and data.keyFigures %}
+    <section class="key-figures" style="padding-top: 0; border-bottom: none;">
+      <div class="figures-grid">
+        {% for fig in data.keyFigures %}
+        <div class="figure-card">
+          <div class="figure-label">{{ fig.label }}</div>
+          <div class="figure-value tabular-nums">{{ fig.value }}</div>
+          <div class="figure-change {{ fig.direction }} tabular-nums">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</div>
+          {% if fig.note %}<div class="figure-note">{{ fig.note }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <h2 style="margin-top: 48px; margin-bottom: 24px;">Detailed Figures</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Asset Class</th>
+          <th>Value</th>
+          <th>Change (30d)</th>
+          <th>Period</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fig in data.keyFigures %}
+        <tr>
+          <td>{{ fig.label }}</td>
+          <td class="tabular-nums">{{ fig.value }}</td>
+          <td class="tabular-nums {{ fig.direction }}">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</td>
+          <td>{{ fig.period }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p class="figures-source" style="margin-top: 24px;">{{ data.source }} · Last updated: {{ data.updatedAt | formatDate }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

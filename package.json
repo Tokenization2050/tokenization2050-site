@@ -1,0 +1,16 @@
+{
+  "name": "tokenization2050",
+  "version": "1.0.0",
+  "description": "Tokenization 2050 — Global information provider on tokenization and real-world assets",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node build.js --serve",
+    "clean": "node -e \"require('fs').rmSync('site', {recursive:true, force:true})\""
+  },
+  "dependencies": {
+    "marked": "^14.0.0",
+    "nunjucks": "^3.2.4"
+  },
+  "private": true,
+  "license": "UNLICENSED"
+}

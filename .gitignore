@@ -1,0 +1,10 @@
+node_modules/
+site/
+
+# Never publish credentials
+*CREDENTIALS*
+*.docx
+
+# Internal notes (contain private names) - never publish
+docs/PROJECT_BRIEF.md
+docs/ANTIGRAVITY_PROMPT.md

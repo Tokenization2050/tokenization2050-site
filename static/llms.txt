@@ -1,0 +1,35 @@
+# Tokenization 2050
+
+> Global information provider on tokenization and real-world assets (RWA).
+
+Tokenization 2050 is an independent, English-language editorial platform covering the tokenization of real-world assets — including security tokens, tokenized funds and bonds, stablecoins, DLT market infrastructure, and regulation worldwide.
+
+## Content
+
+The site publishes news, analysis, and data across the following sections:
+
+- Markets: Market movements, trends, and analysis across tokenized asset classes.
+- Tokenized Funds & Treasuries: Coverage of tokenized money-market funds, treasury products, and institutional fund vehicles.
+- Bonds & Credit: Digital bonds, tokenized credit instruments, and fixed-income innovation.
+- Stablecoins & Payments: Stablecoin markets, payment rails, and digital currency infrastructure.
+- Real Estate & Private Markets: Tokenized real estate, private equity, and alternative asset classes.
+- Regulation: Regulatory developments across the EU, US, UK, Asia, and Middle East.
+- Infrastructure & DLT: Blockchain platforms, settlement systems, custody solutions, and technology standards.
+- Companies & People: Corporate news, executive moves, partnerships, and funding rounds.
+- Analysis: In-depth analysis, opinion, and commentary.
+- Data: Key figures and data on tokenized real-world assets.
+- Glossary: Definitions of key terms in tokenization and digital assets.
+
+## Feeds
+
+- RSS: https://www.tokenization2050.com/feed.xml
+- JSON Feed: https://www.tokenization2050.com/feed.json
+
+## Editorial Standards
+
+All content is produced by the Tokenization 2050 Editorial Team. Facts are sourced from official sources or at least two independent sources, and all sources are cited. All texts are reviewed by a human before publication. The site provides information, not financial advice.
+
+## Contact
+
+- Website: https://www.tokenization2050.com
+- Email: editorial@tokenization2050.com

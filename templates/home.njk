@@ -1,0 +1,91 @@
+{% extends "base.njk" %}
+
+{% block title %}Tokenization 2050 — Global Information Provider on Tokenization &amp; RWA{% endblock %}
+{% block ogTitle %}Tokenization 2050 — Tokenization &amp; Real-World Assets{% endblock %}
+{% block ogUrl %}{{ config.site.url }}{% endblock %}
+{% block canonical %}{{ config.site.url }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  {# ---- LEAD + LATEST ---- #}
+  {% if leadStory %}
+  <section class="lead-section">
+    <article class="lead-story">
+      {% if leadStory.isSample %}<div class="sample-banner">⚠ SAMPLE CONTENT — For demonstration only</div>{% endif %}
+      <span class="section-label"><a href="/{{ leadStory.section }}/">{{ leadStory.sectionName }}</a></span>
+      <h2><a href="/{{ leadStory.section }}/{{ leadStory.id }}/">{{ leadStory.title | replace("[SAMPLE] ", "") }}</a></h2>
+      <p class="lead-summary">{{ leadStory.summary }}</p>
+      <p class="meta">{{ leadStory.byline }} · {{ leadStory.dateFormatted }}</p>
+    </article>
+
+    <aside class="latest-news">
+      <h3>Latest News</h3>
+      <ul class="latest-list">
+        {% for article in latestArticles %}
+        <li>
+          <div class="latest-section">{{ article.sectionName }}</div>
+          <h4><a href="/{{ article.section }}/{{ article.id }}/">{{ article.title | replace("[SAMPLE] ", "") }}</a></h4>
+          <p class="meta">{{ article.timeAgo }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </aside>
+  </section>
+  {% endif %}
+
+  {# ---- KEY FIGURES ---- #}
+  {% if data and data.keyFigures %}
+  <section class="key-figures" aria-label="Key RWA market figures">
+    <h3>Key RWA Figures</h3>
+    <div class="figures-grid">
+      {% for fig in data.keyFigures %}
+      <div class="figure-card">
+        <div class="figure-label">{{ fig.label }}</div>
+        <div class="figure-value tabular-nums">{{ fig.value }}</div>
+        <div class="figure-change {{ fig.direction }} tabular-nums">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</div>
+        {% if fig.note %}<div class="figure-note">{{ fig.note }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <p class="figures-source">Sample data for demonstration · {{ data.updatedAt | formatDate }}</p>
+  </section>
+  {% endif %}
+
+  {# ---- SECTION PREVIEWS ---- #}
+  {% for sectionSlug, sectionArticles in articlesBySection %}
+  {% if sectionArticles.length > 0 %}
+  <section class="section-preview">
+    <div class="section-header">
+      <h3>{{ sectionArticles[0].sectionName }}</h3>
+      <a href="/{{ sectionSlug }}/" class="view-all">View all →</a>
+    </div>
+    <div class="cards-grid">
+      {% for article in sectionArticles %}
+      <div class="story-card">
+        <span class="card-section">{{ article.sectionName }}</span>
+        <h4><a href="/{{ article.section }}/{{ article.id }}/">{{ article.title | replace("[SAMPLE] ", "") }}</a></h4>
+        <p class="card-summary">{{ article.summary }}</p>
+        <p class="meta">{{ article.dateFormatted }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% endfor %}
+
+  {# ---- NEWSLETTER ---- #}
+  <section class="newsletter-cta" aria-label="Newsletter signup">
+    <div class="newsletter-inner">
+      <h3>Stay Informed</h3>
+      <p>Weekly digest of tokenization news, data, and analysis. No spam, unsubscribe anytime.</p>
+      <form class="newsletter-form" action="#" method="post" aria-label="Subscribe to newsletter">
+        <label for="newsletter-email" class="sr-only">Email address</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="your@email.com" required aria-label="Email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

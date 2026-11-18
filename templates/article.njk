@@ -1,0 +1,128 @@
+{% extends "base.njk" %}
+
+{% block title %}{{ article.title | replace("[SAMPLE] ", "") }} — Tokenization 2050{% endblock %}
+{% block description %}{{ article.summary }}{% endblock %}
+{% block ogTitle %}{{ article.title | replace("[SAMPLE] ", "") }}{% endblock %}
+{% block ogDescription %}{{ article.summary }}{% endblock %}
+{% block ogType %}article{% endblock %}
+{% block ogUrl %}{{ config.site.url }}/{{ article.section }}/{{ article.id }}/{% endblock %}
+{% block twitterTitle %}{{ article.title | replace("[SAMPLE] ", "") }}{% endblock %}
+{% block twitterDescription %}{{ article.summary }}{% endblock %}
+{% block canonical %}{{ config.site.url }}/{{ article.section }}/{{ article.id }}/{% endblock %}
+
+{% block head %}
+{# Schema.org NewsArticle #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "{{ article.title | replace("[SAMPLE] ", "") | replace('"', '\\"') }}",
+  "description": "{{ article.summary | replace('"', '\\"') }}",
+  "datePublished": "{{ article.publishedAt }}",
+  {% if article.updatedAt %}"dateModified": "{{ article.updatedAt }}",{% endif %}
+  "author": {
+    "@type": "Organization",
+    "name": "{{ config.site.byline }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tokenization 2050",
+    "url": "{{ config.site.url }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ config.site.url }}{{ config.brand.icon512 }}",
+      "width": 512,
+      "height": 512
+    }
+  },
+  "image": ["{{ config.site.url }}{{ config.brand.shareImage }}"],
+  "mainEntityOfPage": "{{ config.site.url }}/{{ article.section }}/{{ article.id }}/",
+  "articleSection": "{{ article.sectionName }}"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <article class="article-page" itemscope itemtype="https://schema.org/NewsArticle">
+    <meta itemprop="datePublished" content="{{ article.publishedAt }}">
+    {% if article.updatedAt %}<meta itemprop="dateModified" content="{{ article.updatedAt }}">{% endif %}
+
+    <header class="article-header">
+      {# Breadcrumb #}
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <a href="/{{ article.section }}/">{{ article.sectionName }}</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <span>{{ article.title | replace("[SAMPLE] ", "") | truncate(60) }}</span>
+      </nav>
+
+      {% if article.isSample %}<div class="sample-banner">⚠ SAMPLE CONTENT — This article is for demonstration purposes only. It does not represent real reporting.</div>{% endif %}
+
+      <span class="section-label" itemprop="articleSection"><a href="/{{ article.section }}/">{{ article.sectionName }}</a></span>
+
+      <h1 itemprop="headline">{{ article.title | replace("[SAMPLE] ", "") }}</h1>
+
+      <div class="article-meta">
+        <span itemprop="author" itemscope itemtype="https://schema.org/Organization">
+          <span itemprop="name">{{ config.site.byline }}</span>
+        </span>
+        <span>{{ article.dateFormatted }}</span>
+        {% if article.readTime %}<span>{{ article.readTime }} min read</span>{% endif %}
+      </div>
+    </header>
+
+    {# Summary box #}
+    <div class="article-summary" itemprop="description">
+      {{ article.summary }}
+    </div>
+
+    {# Article body #}
+    <div class="article-body" itemprop="articleBody">
+      {{ article.bodyHtml | safe }}
+    </div>
+
+    {# Sources #}
+    {% if article.sources and article.sources.length > 0 %}
+    <footer class="article-sources">
+      <h3>Sources</h3>
+      <ul class="sources-list">
+        {% for source in article.sources %}
+        <li>
+          {% if source.url %}<a href="{{ source.url }}" target="_blank" rel="noopener noreferrer">{{ source.label }}</a>{% else %}{{ source.label }}{% endif %}
+          {% if source.date %}<span class="source-date"> · {{ source.date }}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </footer>
+    {% endif %}
+
+    {# Share #}
+    <div class="article-share">
+      <span>Share</span>
+      <a class="share-link" href="https://twitter.com/intent/tweet?url={{ config.site.url }}/{{ article.section }}/{{ article.id }}/&text={{ article.title | replace("[SAMPLE] ", "") | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">𝕏</a>
+      <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url={{ config.site.url }}/{{ article.section }}/{{ article.id }}/" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">LinkedIn</a>
+      <button class="share-link" onclick="navigator.clipboard.writeText('{{ config.site.url }}/{{ article.section }}/{{ article.id }}/'); this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy link', 2000);" aria-label="Copy link">Copy link</button>
+    </div>
+
+  </article>
+
+  {# Related stories #}
+  {% if relatedArticles and relatedArticles.length > 0 %}
+  <section class="related-stories">
+    <h3>Related Stories</h3>
+    <div class="cards-grid">
+      {% for related in relatedArticles %}
+      <div class="story-card">
+        <span class="card-section">{{ related.sectionName }}</span>
+        <h4><a href="/{{ related.section }}/{{ related.id }}/">{{ related.title | replace("[SAMPLE] ", "") }}</a></h4>
+        <p class="card-summary">{{ related.summary }}</p>
+        <p class="meta">{{ related.dateFormatted }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

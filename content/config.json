@@ -1,0 +1,101 @@
+{
+  "site": {
+    "name": "Tokenization 2050",
+    "url": "https://www.tokenization2050.com",
+    "description": "Global information provider on tokenization and real-world assets (RWA). Data-first coverage of security tokens, tokenized funds, stablecoins, DLT infrastructure, and regulation worldwide.",
+    "byline": "Tokenization 2050 Editorial Team",
+    "language": "en",
+    "copyright": "© 2026 Tokenization 2050. All rights reserved.",
+    "disclaimer": "The information on this site is provided for informational purposes only and does not constitute financial, investment, legal, or tax advice. Always consult a qualified professional before making financial decisions."
+  },
+  "sections": [
+    {
+      "name": "Markets",
+      "slug": "markets",
+      "description": "Market movements, trends, and analysis across tokenized asset classes."
+    },
+    {
+      "name": "Tokenized Funds & Treasuries",
+      "slug": "tokenized-funds",
+      "description": "Coverage of tokenized money-market funds, treasury products, and institutional fund vehicles."
+    },
+    {
+      "name": "Bonds & Credit",
+      "slug": "bonds-credit",
+      "description": "Digital bonds, tokenized credit instruments, and fixed-income innovation."
+    },
+    {
+      "name": "Stablecoins & Payments",
+      "slug": "stablecoins",
+      "description": "Stablecoin markets, payment rails, and digital currency infrastructure."
+    },
+    {
+      "name": "Real Estate & Private Markets",
+      "slug": "real-estate",
+      "description": "Tokenized real estate, private equity, and alternative asset classes."
+    },
+    {
+      "name": "Regulation",
+      "slug": "regulation",
+      "description": "Regulatory developments across the EU, US, UK, Asia, and Middle East."
+    },
+    {
+      "name": "Infrastructure & DLT",
+      "slug": "infrastructure",
+      "description": "Blockchain platforms, settlement systems, custody solutions, and technology standards."
+    },
+    {
+      "name": "Companies & People",
+      "slug": "companies",
+      "description": "Corporate news, executive moves, partnerships, and funding rounds."
+    },
+    {
+      "name": "Analysis",
+      "slug": "analysis",
+      "description": "In-depth analysis, opinion, and commentary from the editorial team."
+    },
+    {
+      "name": "Data",
+      "slug": "data",
+      "description": "Key figures and data on tokenized real-world assets."
+    },
+    {
+      "name": "Glossary",
+      "slug": "glossary",
+      "description": "Definitions of key terms in tokenization and digital assets."
+    }
+  ],
+  "nav": {
+    "primary": [
+      "markets",
+      "tokenized-funds",
+      "bonds-credit",
+      "stablecoins",
+      "regulation",
+      "analysis",
+      "data"
+    ],
+    "secondary": [
+      "real-estate",
+      "infrastructure",
+      "companies",
+      "glossary"
+    ]
+  },
+  "brand": {
+    "_note": "Official logo files are in LOGHI/. Site copies live in static/img/ (served at /assets/img/).",
+    "logo": "/assets/img/logo.svg",
+    "logoWidth": 331,
+    "logoHeight": 56,
+    "icon": "/assets/img/icon.svg",
+    "favicon32": "/assets/img/favicon-32.png",
+    "appleTouchIcon": "/assets/img/apple-touch-icon.png",
+    "icon144": "/assets/img/icon-144.png",
+    "icon192": "/assets/img/icon-192.png",
+    "icon512": "/assets/img/icon-512.png",
+    "shareImage": "/assets/img/og-image.png",
+    "shareImageWidth": 800,
+    "shareImageHeight": 800,
+    "themeColor": "#FFFFFF"
+  }
+}

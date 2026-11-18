@@ -1,0 +1,17 @@
+{% extends "base.njk" %}
+
+{% block title %}{{ page.title }} — Tokenization 2050{% endblock %}
+{% block description %}{{ page.description }}{% endblock %}
+{% block ogTitle %}{{ page.title }} — Tokenization 2050{% endblock %}
+{% block ogUrl %}{{ config.site.url }}/{{ page.slug }}/{% endblock %}
+{% block canonical %}{{ config.site.url }}/{{ page.slug }}/{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="static-page">
+    <div class="page-content">
+      {{ page.bodyHtml | safe }}
+    </div>
+  </div>
+</div>
+{% endblock %}

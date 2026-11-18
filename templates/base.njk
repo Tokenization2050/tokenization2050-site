@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ pageTitle }} — Tokenization 2050{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ config.site.description }}{% endblock %}">
+
+  {# Open Graph #}
+  <meta property="og:title" content="{% block ogTitle %}{{ pageTitle }} — Tokenization 2050{% endblock %}">
+  <meta property="og:description" content="{% block ogDescription %}{{ config.site.description }}{% endblock %}">
+  <meta property="og:type" content="{% block ogType %}website{% endblock %}">
+  <meta property="og:url" content="{% block ogUrl %}{{ config.site.url }}{% endblock %}">
+  <meta property="og:site_name" content="Tokenization 2050">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="{{ config.site.url }}{{ config.brand.shareImage }}">
+  <meta property="og:image:width" content="{{ config.brand.shareImageWidth }}">
+  <meta property="og:image:height" content="{{ config.brand.shareImageHeight }}">
+  <meta property="og:image:alt" content="Tokenization 2050">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{% block twitterTitle %}{{ pageTitle }} — Tokenization 2050{% endblock %}">
+  <meta name="twitter:description" content="{% block twitterDescription %}{{ config.site.description }}{% endblock %}">
+  <meta name="twitter:image" content="{{ config.site.url }}{{ config.brand.shareImage }}">
+
+  {# Icons (official white avatar, see LOGHI/) #}
+  <link rel="icon" href="{{ config.brand.icon }}" type="image/svg+xml">
+  <link rel="icon" href="{{ config.brand.favicon32 }}" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="{{ config.brand.appleTouchIcon }}">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <meta name="theme-color" content="{{ config.brand.themeColor }}">
+
+  {# Canonical #}
+  <link rel="canonical" href="{% block canonical %}{{ config.site.url }}{% endblock %}">
+
+  {# Feeds #}
+  <link rel="alternate" type="application/rss+xml" title="Tokenization 2050 RSS Feed" href="{{ config.site.url }}/feed.xml">
+  <link rel="alternate" type="application/json" title="Tokenization 2050 JSON Feed" href="{{ config.site.url }}/feed.json">
+
+  {# Fonts #}
+  <link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/dm-serif-display-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+
+  {# Stylesheet #}
+  <link rel="stylesheet" href="/assets/css/fonts.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  {# ---- TICKER STRIP ---- #}
+  {% if data and data.ticker %}
+  <div class="ticker" role="complementary" aria-label="Key market figures">
+    <div class="container">
+      <div class="ticker-inner">
+        {% for item in data.ticker %}
+        {% if not loop.first %}<span class="ticker-sep" aria-hidden="true">|</span>{% endif %}
+        <div class="ticker-item">
+          <span class="ticker-label">{{ item.label }}</span>
+          <span class="ticker-value">{{ item.value }}</span>
+          <span class="ticker-change {{ item.direction }}">{{ item.change }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {# ---- HEADER ---- #}
+  <header class="site-header">
+    <div class="container">
+      <div class="header-top">
+        <a href="/" class="site-logo" aria-label="Tokenization 2050 — Home">
+          <img src="{{ config.brand.logo }}" alt="Tokenization 2050" width="{{ config.brand.logoWidth }}" height="{{ config.brand.logoHeight }}">
+        </a>
+        <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); document.querySelector('.site-nav').classList.toggle('open');">
+          ☰ Menu
+        </button>
+        <span class="header-date">{{ buildDate }}</span>
+      </div>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        {# Main row = config.nav.primary; "More" dropdown = config.nav.secondary.
+           On phones the "More" items are shown inline in the open menu. #}
+        <ul class="nav-list">
+          {% for slug in config.nav.primary %}
+          {% set section = sectionMap[slug] %}
+          {% if section %}
+          <li><a href="/{{ section.slug }}/"{% if currentSection === section.slug %} aria-current="page"{% endif %}>{{ section.name }}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if config.nav.secondary.length %}
+          <li class="nav-more{% if currentSection in config.nav.secondary %} is-current{% endif %}">
+            <button type="button" class="nav-more-toggle" aria-expanded="false" aria-controls="nav-more-list">More <span aria-hidden="true">▾</span></button>
+            <ul id="nav-more-list" class="nav-more-list">
+              {% for slug in config.nav.secondary %}
+              {% set section = sectionMap[slug] %}
+              {% if section %}
+              <li><a href="/{{ section.slug }}/"{% if currentSection === section.slug %} aria-current="page"{% endif %}>{{ section.name }}</a></li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {# ---- MAIN CONTENT ---- #}
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  {# ---- FOOTER ---- #}
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/" class="site-logo" aria-label="Tokenization 2050 — Home">
+            <img src="{{ config.brand.logo }}" alt="Tokenization 2050" width="{{ config.brand.logoWidth }}" height="{{ config.brand.logoHeight }}" loading="lazy">
+          </a>
+          <p>Global information provider on tokenization and real-world assets.</p>
+        </div>
+
+        <div class="footer-nav">
+          <div class="footer-nav-group">
+            <h4>Sections</h4>
+            <ul>
+              {% for section in config.sections %}
+              {% if section.slug !== 'data' and section.slug !== 'glossary' %}
+              <li><a href="/{{ section.slug }}/">{{ section.name }}</a></li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="footer-nav-group">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/editorial-standards/">Editorial Standards</a></li>
+              <li><a href="/corrections/">Corrections</a></li>
+              <li><a href="/contact/">Contact</a></li>
+              <li><a href="/privacy/">Privacy Policy</a></li>
+              <li><a href="/legal/">Legal Notice</a></li>
+              <li><a href="/data/">Data</a></li>
+              <li><a href="/glossary/">Glossary</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">{{ config.site.disclaimer }}</p>
+        <p class="footer-copyright">{{ config.site.copyright }}</p>
+      </div>
+    </div>
+  </footer>
+
+  {# "More" menu: open/close on click, close on Escape or click outside #}
+  <script>
+  (function () {
+    var item = document.querySelector('.nav-more');
+    if (!item) return;
+    var btn = item.querySelector('.nav-more-toggle');
+    function setOpen(open) {
+      item.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    btn.addEventListener('click', function () { setOpen(!item.classList.contains('open')); });
+    document.addEventListener('click', function (e) { if (!item.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && item.classList.contains('open')) { setOpen(false); btn.focus(); }
+    });
+  })();
+  </script>
+
+</body>
+</html>
