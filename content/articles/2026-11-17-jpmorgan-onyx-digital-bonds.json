@@ -1,16 +1,42 @@
 {
   "id": "jpmorgan-onyx-digital-bonds",
+  "draft": true,
   "title": "[SAMPLE] JPMorgan Expands Onyx Platform with Multi-Currency Digital Bond Settlement",
   "section": "infrastructure",
   "summary": "JPMorgan's blockchain division Onyx has launched a multi-currency settlement module enabling same-day issuance and atomic delivery-versus-payment for digital bonds across four currencies, with the European Investment Bank and World Bank among the first institutional users.",
   "body": "JPMorgan's blockchain infrastructure division, Onyx, has expanded its digital asset platform with a new multi-currency settlement module that enables atomic delivery-versus-payment (DvP) for digital bonds.\n\nThe upgrade, announced on 17 November, allows issuers and investors to settle digital bond transactions in US dollars, euros, British pounds, and Japanese yen simultaneously — eliminating the settlement risk and time delays inherent in traditional cross-currency bond settlement.\n\n## How it works\n\nThe new module integrates Onyx's existing tokenization infrastructure with JPMorgan's JPM Coin system (now rebranded as Kinexys Digital Payments) to enable true atomic settlement.\n\nIn a traditional bond issuance, settlement typically takes T+2 (two business days) and involves multiple intermediaries: the issuer, lead manager, paying agent, central securities depository, and correspondent banks for currency conversion. Each handoff introduces settlement risk and cost.\n\nOnyx's digital bond module compresses this to near-instant settlement through three mechanisms:\n\n1. **Tokenized bond issuance**: The bond instrument is created as a digital token on Onyx's permissioned blockchain, with all terms (coupon, maturity, denomination) encoded in smart contract logic.\n2. **Atomic DvP**: The bond token and payment token (JPM Coin / Kinexys) are exchanged in a single atomic transaction — either both legs settle, or neither does.\n3. **Multi-currency netting**: For cross-currency transactions, the system performs FX conversion and settlement within the same atomic operation, using JPMorgan's internal FX rates.\n\n## Institutional adoption\n\nThe European Investment Bank (EIB) and the World Bank (International Bank for Reconstruction and Development) are among the first institutional users of the platform.\n\nThe EIB has previously issued digital bonds on Ethereum (a €100 million bond in 2023) and on the HSBC Orion platform. The Onyx integration allows the supranational issuer to settle across its four main funding currencies within a single platform.\n\n\"Multi-currency atomic settlement removes one of the last major friction points in international bond markets,\" said Umar Farooq, CEO of Onyx by JPMorgan. \"We're not replacing the bond market — we're upgrading the pipes.\"\n\nThe World Bank has used Onyx for a pilot issuance of tokenized sustainable development bonds, with settlement in USD and EUR.\n\n## Competitive landscape\n\nJPMorgan's expansion comes amid intensifying competition in institutional blockchain infrastructure:\n\n- **HSBC Orion**: Has settled over $3 billion in digital bonds since launch, primarily for Hong Kong and European issuers.\n- **Goldman Sachs GS DAP**: Tokenization platform used by the EIB for a $100 million digital bond in 2024.\n- **SIX Digital Exchange (SDX)**: Switzerland's regulated digital exchange has listed tokenized bonds from UBS and the City of Lugano.\n- **Broadridge DLR**: Processes $1 trillion monthly in repo transactions on its distributed ledger repo platform.\n\nOnyx distinguishes itself through its integrated payment rail. While competitors typically rely on external payment systems for the cash leg of bond settlement, Onyx uses JPM Coin / Kinexys — giving it end-to-end control over both the security and cash legs.\n\n## The BIS connection\n\nThe Bank for International Settlements (BIS) has identified DvP settlement of tokenized securities as a priority use case in its \"Project Meridian\" and \"Project Mariana\" initiatives. JPMorgan has participated in both BIS Innovation Hub programmes.\n\nIn its October 2026 Quarterly Review, the BIS noted that \"tokenized bond settlement has moved from proof-of-concept to production-grade infrastructure at several global banks,\" citing Onyx, HSBC Orion, and SDX as leading examples.\n\n## What it means\n\nJPMorgan's multi-currency bond settlement module addresses one of the most concrete pain points in capital markets: the cost, risk, and delay of cross-border securities settlement. With $600 billion in international bond issuance annually, even modest efficiency gains represent significant value.\n\nThe question now is whether competing banks will build their own platforms or connect to existing ones — and whether interoperability between Onyx, HSBC Orion, Goldman Sachs GS DAP, and regulated exchanges like SDX will emerge organically or require industry coordination.",
   "sources": [
-    { "label": "JPMorgan Onyx — official platform announcement", "url": "https://www.jpmorgan.com/onyx", "date": "2026-11-17" },
-    { "label": "BIS Quarterly Review, October 2026 — Tokenised bond markets", "url": "https://www.bis.org/publ/qtrpdf/r_qt2610.htm", "date": "2026-10-15" },
-    { "label": "European Investment Bank — Digital bond programme", "url": "https://www.eib.org/en/investor-relations/digital-bonds", "date": "2026-11-10" },
-    { "label": "Kinexys (formerly JPM Coin) documentation", "url": "https://www.jpmorgan.com/kinexys", "date": "2026-11-01" }
+    {
+      "label": "JPMorgan Onyx — official platform announcement",
+      "url": "https://www.jpmorgan.com/onyx",
+      "date": "2026-11-17"
+    },
+    {
+      "label": "BIS Quarterly Review, October 2026 — Tokenised bond markets",
+      "url": "https://www.bis.org/publ/qtrpdf/r_qt2610.htm",
+      "date": "2026-10-15"
+    },
+    {
+      "label": "European Investment Bank — Digital bond programme",
+      "url": "https://www.eib.org/en/investor-relations/digital-bonds",
+      "date": "2026-11-10"
+    },
+    {
+      "label": "Kinexys (formerly JPM Coin) documentation",
+      "url": "https://www.jpmorgan.com/kinexys",
+      "date": "2026-11-01"
+    }
   ],
   "publishedAt": "2026-11-17T11:00:00Z",
-  "tags": ["jpmorgan", "onyx", "kinexys", "digital-bonds", "settlement", "eib", "world-bank", "infrastructure"],
+  "tags": [
+    "jpmorgan",
+    "onyx",
+    "kinexys",
+    "digital-bonds",
+    "settlement",
+    "eib",
+    "world-bank",
+    "infrastructure"
+  ],
   "isSample": true
 }

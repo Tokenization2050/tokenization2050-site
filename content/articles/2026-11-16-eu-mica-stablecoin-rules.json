@@ -1,16 +1,42 @@
 {
   "id": "eu-mica-stablecoin-rules",
+  "draft": true,
   "title": "[SAMPLE] EU Stablecoin Rules Under MiCA Enter Full Enforcement, Reshaping the European Market",
   "section": "regulation",
   "summary": "The European Union's Markets in Crypto-Assets regulation (MiCA) has entered full enforcement for stablecoin issuers, requiring e-money tokens and asset-referenced tokens to hold appropriate licences. Major issuers including Circle and Société Générale's FORGE have secured authorisation, while Tether faces mounting pressure to comply.",
   "body": "The European Union's comprehensive crypto-asset regulatory framework, the Markets in Crypto-Assets Regulation (MiCA), has reached full enforcement for stablecoin issuers as of 30 June 2025, with a transition period that ended on 14 November 2026.\n\nAll issuers of e-money tokens (EMTs) and asset-referenced tokens (ARTs) operating within the EU must now hold appropriate licences from national competent authorities, maintain adequate reserves, and comply with detailed disclosure and governance requirements.\n\n## Who is in, who is out\n\nSeveral major stablecoin issuers have successfully navigated the MiCA authorisation process:\n\n- **Circle (USDC, EURC)**: Received e-money licence from the Autorité de Contrôle Prudentiel et de Résolution (ACPR) in France. EURC has become the leading euro-denominated stablecoin, with market capitalisation exceeding $1.2 billion.\n- **Société Générale — FORGE (EUR CoinVertible)**: Authorised as an e-money institution, issuing the institutional-grade EUR CoinVertible (EURCV) token on Ethereum.\n- **Banking Circle**: Received authorisation in Luxembourg for its euro stablecoin, targeting B2B payment settlement.\n\nNotably absent from the authorised list is Tether (USDT), the world's largest stablecoin by market capitalisation ($94 billion globally). Tether has not obtained an EMT licence in any EU member state, leading several European exchanges to delist USDT for EU-based customers.\n\n## Market impact\n\nThe regulatory reshuffling has measurably altered the European stablecoin landscape:\n\n- **USDC's EU market share** has risen from 22% to 41% since MiCA's stablecoin provisions took effect, according to data from Kaiko.\n- **USDT trading volumes** on EU-regulated exchanges have dropped by approximately 60%, though significant off-shore and OTC activity continues.\n- **Euro-denominated stablecoins** have collectively grown from $450 million to $1.8 billion in market capitalisation, driven by EURC and EURCV adoption.\n\n\"MiCA has created the world's first jurisdiction-wide regulatory clarity for stablecoins,\" said Eva Wimmer, Director General of Financial Market Policy at the German Federal Ministry of Finance. \"This positions Europe as the gold standard for digital asset regulation.\"\n\n## Reserve requirements and consumer protection\n\nUnder MiCA, stablecoin issuers must:\n\n- Maintain 1:1 reserve backing, with at least 30% of reserves held in cash deposits across EU credit institutions (rising to 60% for \"significant\" tokens).\n- Publish quarterly reserve reports audited by an independent firm.\n- Implement orderly wind-down plans and maintain sufficient own funds.\n- Provide holders with a right of redemption at par value at any time.\n\nThe regulation also caps daily transaction volumes for non-euro stablecoins at €200 million when used as a means of payment within the EU — a provision that has been particularly contentious for dollar-denominated stablecoin issuers.\n\n## Implications for tokenization\n\nMiCA's stablecoin framework has direct implications for the broader tokenization ecosystem. Stablecoins serve as the primary settlement currency for tokenized assets, and regulatory clarity on this foundational layer is expected to accelerate institutional adoption of tokenized bonds, funds, and real estate in European markets.\n\nThe European Central Bank has separately continued work on a digital euro, which some market participants view as complementary to, rather than competitive with, MiCA-regulated stablecoins.\n\n## What comes next\n\nThe European Securities and Markets Authority (ESMA) is expected to publish Level 2 technical standards for tokenized securities and security tokens in Q1 2027, completing the MiCA framework and potentially opening Europe as the first fully regulated market for end-to-end tokenized finance.",
   "sources": [
-    { "label": "European Commission — MiCA implementation timeline", "url": "https://finance.ec.europa.eu/digital-finance/crypto-assets_en", "date": "2026-11-01" },
-    { "label": "European Banking Authority — MiCA stablecoin register", "url": "https://www.eba.europa.eu/crypto-assets", "date": "2026-11-14" },
-    { "label": "Kaiko Research — EU stablecoin market data", "url": "https://www.kaiko.com/research", "date": "2026-11-15" },
-    { "label": "Circle — EURC MiCA compliance statement", "url": "https://www.circle.com/eurc", "date": "2026-10-30" }
+    {
+      "label": "European Commission — MiCA implementation timeline",
+      "url": "https://finance.ec.europa.eu/digital-finance/crypto-assets_en",
+      "date": "2026-11-01"
+    },
+    {
+      "label": "European Banking Authority — MiCA stablecoin register",
+      "url": "https://www.eba.europa.eu/crypto-assets",
+      "date": "2026-11-14"
+    },
+    {
+      "label": "Kaiko Research — EU stablecoin market data",
+      "url": "https://www.kaiko.com/research",
+      "date": "2026-11-15"
+    },
+    {
+      "label": "Circle — EURC MiCA compliance statement",
+      "url": "https://www.circle.com/eurc",
+      "date": "2026-10-30"
+    }
   ],
   "publishedAt": "2026-11-16T07:00:00Z",
-  "tags": ["mica", "eu-regulation", "stablecoins", "usdc", "usdt", "tether", "circle", "europe"],
+  "tags": [
+    "mica",
+    "eu-regulation",
+    "stablecoins",
+    "usdc",
+    "usdt",
+    "tether",
+    "circle",
+    "europe"
+  ],
   "isSample": true
 }

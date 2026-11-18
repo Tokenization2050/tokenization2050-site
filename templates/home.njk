@@ -9,6 +9,15 @@
 <div class="container">
 
   {# ---- LEAD + LATEST ---- #}
+  {# Shown only while no article is published yet #}
+  {% if not leadStory %}
+  <section class="home-intro">
+    <h1>Tokenization 2050</h1>
+    <p>{{ config.site.description }}</p>
+    <p class="meta">Our coverage starts soon. Explore the <a href="/glossary/">glossary</a> or read our <a href="/editorial-standards/">editorial standards</a>.</p>
+  </section>
+  {% endif %}
+
   {% if leadStory %}
   <section class="lead-section">
     <article class="lead-story">
@@ -35,11 +44,12 @@
   {% endif %}
 
   {# ---- KEY FIGURES ---- #}
-  {% if data and data.keyFigures %}
+  {# Only verified figures (filtered in build.js); hidden entirely when none #}
+  {% if verifiedFigures and verifiedFigures.length > 0 %}
   <section class="key-figures" aria-label="Key RWA market figures">
     <h3>Key RWA Figures</h3>
     <div class="figures-grid">
-      {% for fig in data.keyFigures %}
+      {% for fig in verifiedFigures %}
       <div class="figure-card">
         <div class="figure-label">{{ fig.label }}</div>
         <div class="figure-value tabular-nums">{{ fig.value }}</div>
@@ -48,7 +58,7 @@
       </div>
       {% endfor %}
     </div>
-    <p class="figures-source">Sample data for demonstration · {{ data.updatedAt | formatDate }}</p>
+    <p class="figures-source">{{ data.source }} · {{ data.updatedAt | formatDate }}</p>
   </section>
   {% endif %}
 

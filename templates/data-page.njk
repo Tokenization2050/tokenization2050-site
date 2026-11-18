@@ -10,12 +10,13 @@
 <div class="container">
   <div class="data-page">
     <h1>Data</h1>
-    <p>Key figures on tokenized real-world assets. Sample data for demonstration purposes.</p>
+    <p>Key figures on tokenized real-world assets.</p>
 
-    {% if data and data.keyFigures %}
+    {# Only verified figures (filtered in build.js) #}
+    {% if verifiedFigures and verifiedFigures.length > 0 %}
     <section class="key-figures" style="padding-top: 0; border-bottom: none;">
       <div class="figures-grid">
-        {% for fig in data.keyFigures %}
+        {% for fig in verifiedFigures %}
         <div class="figure-card">
           <div class="figure-label">{{ fig.label }}</div>
           <div class="figure-value tabular-nums">{{ fig.value }}</div>
@@ -38,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for fig in data.keyFigures %}
+        {% for fig in verifiedFigures %}
         <tr>
           <td>{{ fig.label }}</td>
           <td class="tabular-nums">{{ fig.value }}</td>
@@ -50,6 +51,10 @@
     </table>
 
     <p class="figures-source" style="margin-top: 24px;">{{ data.source }} · Last updated: {{ data.updatedAt | formatDate }}</p>
+    {% else %}
+    <div class="section-empty">
+      <p>Verified figures will be published here soon. Every figure will show its source and the date it was last updated.</p>
+    </div>
     {% endif %}
   </div>
 </div>

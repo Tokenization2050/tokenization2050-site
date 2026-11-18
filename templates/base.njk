@@ -52,11 +52,12 @@
 <body>
 
   {# ---- TICKER STRIP ---- #}
-  {% if data and data.ticker %}
+  {# Only items with a verified value (filtered in build.js); hidden entirely when none #}
+  {% if tickerItems and tickerItems.length > 0 %}
   <div class="ticker" role="complementary" aria-label="Key market figures">
     <div class="container">
       <div class="ticker-inner">
-        {% for item in data.ticker %}
+        {% for item in tickerItems %}
         {% if not loop.first %}<span class="ticker-sep" aria-hidden="true">|</span>{% endif %}
         <div class="ticker-item">
           <span class="ticker-label">{{ item.label }}</span>

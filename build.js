@@ -127,11 +127,17 @@ for (const s of config.sections) {
 // Load articles
 const articlesDir = path.join(CONTENT_DIR, 'articles');
 let articles = [];
+let draftCount = 0;
 if (fs.existsSync(articlesDir)) {
   for (const file of fs.readdirSync(articlesDir)) {
     if (!file.endsWith('.json')) continue;
     try {
       const article = readJSON(path.join(articlesDir, file));
+      // Drafts ("draft": true) are kept in content/ but never published
+      if (article.draft === true) {
+        draftCount++;
+        continue;
+      }
       article.sectionName = sectionMap[article.section]
         ? sectionMap[article.section].name
         : article.section;
@@ -150,7 +156,7 @@ if (fs.existsSync(articlesDir)) {
 // Sort articles by date descending
 articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
-console.log(`  ✓ ${articles.length} articles loaded`);
+console.log(`  ✓ ${articles.length} articles loaded (${draftCount} drafts skipped)`);
 
 // Load pages
 const pagesDir = path.join(CONTENT_DIR, 'pages');
@@ -219,11 +225,24 @@ if (fs.existsSync(path.join(STATIC_DIR, 'llms.txt'))) {
   );
 }
 
+// Custom domain for GitHub Pages (from config.site.url)
+writeOutput(path.join(OUTPUT_DIR, 'CNAME'), new URL(config.site.url).host + '\n');
+
 const now = Date.now();
 const buildDate = formatDateShort(new Date().toISOString());
 
 // Common template data
-const common = { config, data, buildDate, sectionMap };
+// Ticker: only items with a verified value are shown; with none, the strip is hidden
+const tickerItems = (data.ticker || []).filter(
+  (item) => item.value !== undefined && item.value !== null && String(item.value).trim() !== ''
+);
+
+// Key figures: same rule — only figures with a verified value are published
+const verifiedFigures = (data.keyFigures || []).filter(
+  (fig) => fig.value !== undefined && fig.value !== null && String(fig.value).trim() !== ''
+);
+
+const common = { config, data, buildDate, sectionMap, tickerItems, verifiedFigures };
 
 // Warn about menu entries in config.nav that don't match a section slug
 for (const slug of [...config.nav.primary, ...config.nav.secondary]) {
@@ -485,7 +504,9 @@ if (process.argv.includes('--serve')) {
   };
 
   const server = http.createServer((req, res) => {
-    let filePath = path.join(OUTPUT_DIR, req.url === '/' ? '/index.html' : req.url);
+    // Ignore query strings and #fragments (e.g. /?utm=x) like a real web host does
+    const urlPath = decodeURIComponent(req.url.split(/[?#]/)[0]);
+    let filePath = path.join(OUTPUT_DIR, urlPath === '/' ? '/index.html' : urlPath);
 
     // Try adding index.html for directory-like URLs
     if (!path.extname(filePath)) {

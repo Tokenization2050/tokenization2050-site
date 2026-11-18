@@ -8,3 +8,6 @@ site/
 # Internal notes (contain private names) - never publish
 docs/PROJECT_BRIEF.md
 docs/ANTIGRAVITY_PROMPT.md
+
+# Local browser-test screenshots
+.playwright-mcp/

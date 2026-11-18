@@ -1,176 +1,92 @@
 {
   "updatedAt": "2026-11-17T14:00:00Z",
-  "source": "Sample data for demonstration purposes",
+  "source": "",
   "ticker": [
     {
       "label": "Total RWA",
-      "value": "$18.7B",
-      "change": "+2.3%",
-      "direction": "up"
+      "value": "",
+      "change": "",
+      "direction": ""
     },
     {
       "label": "Tokenized Treasuries",
-      "value": "$6.2B",
-      "change": "+1.1%",
-      "direction": "up"
+      "value": "",
+      "change": "",
+      "direction": ""
     },
     {
       "label": "Private Credit",
-      "value": "$4.1B",
-      "change": "+5.7%",
-      "direction": "up"
+      "value": "",
+      "change": "",
+      "direction": ""
     },
     {
       "label": "Stablecoins",
-      "value": "$178.4B",
-      "change": "+0.4%",
-      "direction": "up"
+      "value": "",
+      "change": "",
+      "direction": ""
     },
     {
       "label": "Bonds & Credit",
-      "value": "$2.8B",
-      "change": "-0.2%",
-      "direction": "down"
+      "value": "",
+      "change": "",
+      "direction": ""
     },
     {
       "label": "Real Estate",
-      "value": "$1.3B",
-      "change": "+3.1%",
-      "direction": "up"
+      "value": "",
+      "change": "",
+      "direction": ""
     }
   ],
   "keyFigures": [
     {
       "label": "Total Tokenized RWA",
-      "value": "$18.7B",
-      "change": "+2.3%",
-      "direction": "up",
+      "value": "",
+      "change": "",
+      "direction": "",
       "period": "30d",
-      "note": "Excludes stablecoins",
-      "history": [
-        12.1,
-        12.8,
-        13.4,
-        13.9,
-        14.6,
-        15.2,
-        15.9,
-        16.4,
-        17.1,
-        17.6,
-        18.3,
-        18.7
-      ]
+      "note": "Excludes stablecoins"
     },
     {
       "label": "Tokenized Treasuries & MMFs",
-      "value": "$6.2B",
-      "change": "+1.1%",
-      "direction": "up",
+      "value": "",
+      "change": "",
+      "direction": "",
       "period": "30d",
-      "note": "Including BUIDL, BENJI, OUSG",
-      "history": [
-        3.9,
-        4.2,
-        4.4,
-        4.7,
-        4.9,
-        5.2,
-        5.4,
-        5.6,
-        5.8,
-        6,
-        6.1,
-        6.2
-      ]
+      "note": "Including BUIDL, BENJI, OUSG"
     },
     {
       "label": "Private Credit",
-      "value": "$4.1B",
-      "change": "+5.7%",
-      "direction": "up",
+      "value": "",
+      "change": "",
+      "direction": "",
       "period": "30d",
-      "note": "Centrifuge, Maple, Goldfinch",
-      "history": [
-        2.6,
-        2.7,
-        2.9,
-        3,
-        3.1,
-        3.3,
-        3.4,
-        3.6,
-        3.7,
-        3.8,
-        3.9,
-        4.1
-      ]
+      "note": "Centrifuge, Maple, Goldfinch"
     },
     {
       "label": "Stablecoin Market Cap",
-      "value": "$178.4B",
-      "change": "+0.4%",
-      "direction": "up",
+      "value": "",
+      "change": "",
+      "direction": "",
       "period": "30d",
-      "note": "USDT, USDC, DAI, PYUSD",
-      "history": [
-        152,
-        155.3,
-        158.9,
-        161.2,
-        163,
-        166.7,
-        169.4,
-        172.1,
-        174,
-        176.3,
-        177.7,
-        178.4
-      ]
+      "note": "USDT, USDC, DAI, PYUSD"
     },
     {
       "label": "Tokenized Bonds",
-      "value": "$2.8B",
-      "change": "-0.2%",
-      "direction": "down",
+      "value": "",
+      "change": "",
+      "direction": "",
       "period": "30d",
-      "note": "Corporate and sovereign",
-      "history": [
-        2.1,
-        2.2,
-        2.3,
-        2.3,
-        2.4,
-        2.5,
-        2.6,
-        2.7,
-        2.8,
-        2.9,
-        2.8,
-        2.8
-      ]
+      "note": "Corporate and sovereign"
     },
     {
       "label": "Tokenized Real Estate",
-      "value": "$1.3B",
-      "change": "+3.1%",
-      "direction": "up",
+      "value": "",
+      "change": "",
+      "direction": "",
       "period": "30d",
-      "note": "Commercial and residential",
-      "history": [
-        0.9,
-        0.95,
-        0.98,
-        1,
-        1.05,
-        1.1,
-        1.12,
-        1.15,
-        1.2,
-        1.24,
-        1.26,
-        1.3
-      ]
+      "note": "Commercial and residential"
     }
   ]
 }
