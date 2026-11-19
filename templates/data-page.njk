@@ -1,4 +1,5 @@
 {% extends "base.njk" %}
+{% from "_macros.njk" import figureCard %}
 
 {% block title %}Data — Key RWA Figures — Tokenization 2050{% endblock %}
 {% block description %}Key figures and data on tokenized real-world assets, including treasuries, stablecoins, private credit, bonds, and real estate.{% endblock %}
@@ -14,34 +15,54 @@
 
     {# Only verified figures (filtered in build.js) #}
     {% if verifiedFigures and verifiedFigures.length > 0 %}
-    <section class="key-figures" style="padding-top: 0; border-bottom: none;">
+    <section class="key-figures key-figures--page" aria-label="Key RWA figures">
       <div class="figures-grid">
-        {% for fig in verifiedFigures %}
-        <div class="figure-card">
-          <div class="figure-label">{{ fig.label }}</div>
-          <div class="figure-value tabular-nums">{{ fig.value }}</div>
-          <div class="figure-change {{ fig.direction }} tabular-nums">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</div>
-          {% if fig.note %}<div class="figure-note">{{ fig.note }}</div>{% endif %}
-        </div>
-        {% endfor %}
+        {% for fig in verifiedFigures %}{{ figureCard(fig) }}{% endfor %}
       </div>
     </section>
 
-    <h2 style="margin-top: 48px; margin-bottom: 24px;">Detailed Figures</h2>
+    {# Charts: drawn by self-hosted Chart.js (/assets/vendor), loaded only when
+       this section scrolls into view. Each box has a fixed height and shows a
+       skeleton until the chart is drawn (no layout shift). The table below
+       holds the same numbers for screen readers and no-JS readers. #}
+    {% if hasCharts %}
+    <section class="data-charts reveal" aria-label="Charts">
+      {% if chartData.comparison %}
+      <figure class="chart-panel chart-panel--wide">
+        <figcaption>Market size by asset class</figcaption>
+        <div class="chart-box skeleton" data-chart="comparison">
+          <canvas role="img" aria-label="Bar chart comparing market size by asset class. Values are listed in the table below."></canvas>
+        </div>
+      </figure>
+      {% endif %}
+      {% for t in chartData.trends %}
+      <figure class="chart-panel">
+        <figcaption>{{ t.label }}</figcaption>
+        <div class="chart-box chart-box--small skeleton" data-chart="trend" data-chart-id="{{ t.id }}">
+          <canvas role="img" aria-label="Line chart: {{ t.label }} from {{ t.points[0].date | formatDateShort }} to {{ t.points[t.points.length - 1].date | formatDateShort }}."></canvas>
+        </div>
+      </figure>
+      {% endfor %}
+    </section>
+    <script type="application/json" id="chart-data">{{ chartData | jsonScript | safe }}</script>
+    {% endif %}
 
+    <h2 class="data-table-title">Detailed Figures</h2>
+
+    <div class="table-scroll">
     <table class="data-table">
       <thead>
         <tr>
-          <th>Asset Class</th>
-          <th>Value</th>
-          <th>Change (30d)</th>
-          <th>Period</th>
+          <th scope="col">Asset Class</th>
+          <th scope="col">Value</th>
+          <th scope="col">Change</th>
+          <th scope="col">Period</th>
         </tr>
       </thead>
       <tbody>
         {% for fig in verifiedFigures %}
         <tr>
-          <td>{{ fig.label }}</td>
+          <th scope="row">{{ fig.label }}</th>
           <td class="tabular-nums">{{ fig.value }}</td>
           <td class="tabular-nums {{ fig.direction }}">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</td>
           <td>{{ fig.period }}</td>
@@ -49,8 +70,9 @@
         {% endfor %}
       </tbody>
     </table>
+    </div>
 
-    <p class="figures-source" style="margin-top: 24px;">{{ data.source }} · Last updated: {{ data.updatedAt | formatDate }}</p>
+    <p class="figures-source">{% if data.source %}{{ data.source }} · {% endif %}Last updated: {{ data.updatedAt | formatDate }}</p>
     {% else %}
     <div class="section-empty">
       <p>Verified figures will be published here soon. Every figure will show its source and the date it was last updated.</p>

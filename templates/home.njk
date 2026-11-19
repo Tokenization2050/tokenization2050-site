@@ -1,4 +1,5 @@
 {% extends "base.njk" %}
+{% from "_macros.njk" import figureCard %}
 
 {% block title %}Tokenization 2050 — Global Information Provider on Tokenization &amp; RWA{% endblock %}
 {% block ogTitle %}Tokenization 2050 — Tokenization &amp; Real-World Assets{% endblock %}
@@ -46,17 +47,10 @@
   {# ---- KEY FIGURES ---- #}
   {# Only verified figures (filtered in build.js); hidden entirely when none #}
   {% if verifiedFigures and verifiedFigures.length > 0 %}
-  <section class="key-figures" aria-label="Key RWA market figures">
+  <section class="key-figures reveal" aria-label="Key RWA market figures">
     <h3>Key RWA Figures</h3>
     <div class="figures-grid">
-      {% for fig in verifiedFigures %}
-      <div class="figure-card">
-        <div class="figure-label">{{ fig.label }}</div>
-        <div class="figure-value tabular-nums">{{ fig.value }}</div>
-        <div class="figure-change {{ fig.direction }} tabular-nums">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</div>
-        {% if fig.note %}<div class="figure-note">{{ fig.note }}</div>{% endif %}
-      </div>
-      {% endfor %}
+      {% for fig in verifiedFigures %}{{ figureCard(fig) }}{% endfor %}
     </div>
     <p class="figures-source">{{ data.source }} · {{ data.updatedAt | formatDate }}</p>
   </section>
@@ -65,7 +59,7 @@
   {# ---- SECTION PREVIEWS ---- #}
   {% for sectionSlug, sectionArticles in articlesBySection %}
   {% if sectionArticles.length > 0 %}
-  <section class="section-preview">
+  <section class="section-preview reveal">
     <div class="section-header">
       <h3>{{ sectionArticles[0].sectionName }}</h3>
       <a href="/{{ sectionSlug }}/" class="view-all">View all →</a>
@@ -85,7 +79,7 @@
   {% endfor %}
 
   {# ---- NEWSLETTER ---- #}
-  <section class="newsletter-cta" aria-label="Newsletter signup">
+  <section class="newsletter-cta reveal" aria-label="Newsletter signup">
     <div class="newsletter-inner">
       <h3>Stay Informed</h3>
       <p>Weekly digest of tokenization news, data, and analysis. No spam, unsubscribe anytime.</p>

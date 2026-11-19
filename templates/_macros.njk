@@ -1,0 +1,37 @@
+{# Key figure card, shared by home.njk and data-page.njk.
+   The real value is always in the HTML (works without JavaScript).
+   When the value has one number in it, site.js counts up to it once the card
+   scrolls into view (skipped with prefers-reduced-motion). Screen readers get
+   the final value from the sr-only copy and never hear the moving digits. #}
+{% macro figureCard(fig) %}
+<div class="figure-card">
+  <div class="figure-label">{{ fig.label }}</div>
+  <div class="figure-value tabular-nums">
+    {% if fig.count %}
+    <span class="sr-only">{{ fig.value }}</span>
+    <span aria-hidden="true" data-count-to="{{ fig.count.number }}" data-decimals="{{ fig.count.decimals }}" data-prefix="{{ fig.count.prefix }}" data-suffix="{{ fig.count.suffix }}"{% if fig.count.grouped %} data-grouped{% endif %}>{{ fig.value }}</span>
+    {% else %}{{ fig.value }}{% endif %}
+  </div>
+  {% if fig.change %}<div class="figure-change {{ fig.direction }} tabular-nums">{% if fig.direction === 'up' %}↑{% elif fig.direction === 'down' %}↓{% endif %} {{ fig.change }}</div>{% endif %}
+  {% if fig.note %}<div class="figure-note">{{ fig.note }}</div>{% endif %}
+</div>
+{% endmacro %}
+
+{# Monochrome social icon (fill = currentColor, so it takes the text colour). #}
+{% macro socialIcon(channel, size) %}
+<svg class="social-icon" viewBox="0 0 24 24" width="{{ size or 18 }}" height="{{ size or 18 }}" aria-hidden="true" focusable="false"><path d="{{ channel.icon }}"/></svg>
+{% endmacro %}
+
+{# Row of icon links for every channel in config.social (priority order). #}
+{% macro socialLinks(social, size, extraClass) %}
+<ul class="social-links {{ extraClass }}">
+  {% for c in social %}{% if c.icon %}
+  <li><a href="{{ c.url }}" target="_blank" rel="noopener me" aria-label="Tokenization 2050 on {{ c.name }}" title="{{ c.name }}">{{ socialIcon(c, size) }}</a></li>
+  {% endif %}{% endfor %}
+</ul>
+{% endmacro %}
+
+{# "Follow on WhatsApp" button. #}
+{% macro whatsappButton(whatsapp, label, extraClass) %}
+<a class="btn-whatsapp {{ extraClass }}" href="{{ whatsapp.url }}" target="_blank" rel="noopener">{{ socialIcon(whatsapp, 18) }}<span>{{ label or "Follow on WhatsApp" }}</span></a>
+{% endmacro %}

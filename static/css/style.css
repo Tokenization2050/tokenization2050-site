@@ -21,6 +21,7 @@
   --color-border-dark:#D1D5DB;
   --color-red:        #DC2626;
   --color-green:      #059669;
+  --color-green-text: #047857; /* darker green for small text: 4.5:1 contrast on white and Surface */
   --color-amber:      #D97706;
   --color-sample-bg:  #FEF3C7;
   --color-sample-border: #F59E0B;
@@ -315,6 +316,7 @@ table,
    5. Ticker Strip
    -------------------------------------------------------------------------- */
 .ticker {
+  position: relative;
   background: var(--color-ink);
   color: var(--color-white);
   font-size: 0.8125rem;
@@ -322,18 +324,72 @@ table,
   overflow: hidden;
 }
 
-.ticker-inner {
+.ticker-viewport {
+  overflow: hidden;
+}
+
+/* leave room for the pause button so figures never run underneath it */
+.ticker:has(.ticker-pause:not([hidden])) .ticker-viewport {
+  margin-right: 40px;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll var(--ticker-duration, 42s) linear infinite;
+}
+
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track,
+.ticker.is-paused .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-group {
   display: flex;
   align-items: center;
   gap: var(--sp-6);
-  padding: var(--sp-2) 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  min-width: 100vw;
+  padding: var(--sp-2) var(--sp-6);
+  flex-shrink: 0;
 }
 
-.ticker-inner::-webkit-scrollbar {
-  display: none;
+.ticker-pause {
+  position: absolute;
+  top: 50%;
+  right: var(--sp-2);
+  transform: translateY(-50%);
+  width: 28px;
+  height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  background: var(--color-ink);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.625rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.ticker-pause:hover {
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+
+/* Reduced motion: no scrolling; one copy, swipe/scroll by hand */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .ticker-viewport::-webkit-scrollbar { display: none; }
+  .ticker-track { animation: none; }
+  .ticker-group { min-width: 0; }
+  .ticker-group[aria-hidden="true"] { display: none; }
 }
 
 .ticker-item {
@@ -529,7 +585,7 @@ table,
 }
 
 .figure-change.up {
-  color: var(--color-green);
+  color: var(--color-green-text);
 }
 
 .figure-change.down {
@@ -1116,7 +1172,7 @@ table,
   background: var(--color-surface);
 }
 
-.data-table .up { color: var(--color-green); }
+.data-table .up { color: var(--color-green-text); }
 .data-table .down { color: var(--color-red); }
 
 /* --------------------------------------------------------------------------
@@ -1221,6 +1277,7 @@ table,
   gap: var(--sp-10);
 }
 
+.footer-nav-group h2,
 .footer-nav-group h4 {
   font-size: 0.75rem;
   font-weight: 700;
@@ -1437,4 +1494,506 @@ table,
 .home-intro .meta {
   font-size: 0.875rem;
   color: var(--color-muted);
+}
+
+
+/* ==========================================================================
+   Dynamic UI — all motion is subtle and switched off with
+   prefers-reduced-motion. No gradients or glows (Design System §1).
+   ========================================================================== */
+
+/* ---- Skip link + focus ---- */
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: -48px;
+  z-index: 100;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--color-ink);
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 2px;
+}
+.skip-link:focus {
+  top: var(--sp-2);
+  color: var(--color-white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-azure-700);
+  outline-offset: 2px;
+}
+
+/* ---- Preview-only bar (npm run preview; never on the live site) ---- */
+.preview-banner {
+  background: var(--color-sample-bg);
+  border-bottom: 1px solid var(--color-sample-border);
+  color: #92400E;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 6px var(--sp-4);
+}
+
+/* ---- Latest headlines strip ---- */
+.latest-strip {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-white);
+  font-size: 0.8125rem;
+}
+.latest-strip-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 40px;
+}
+.latest-strip-label {
+  flex-shrink: 0;
+  padding: 2px var(--sp-2);
+  background: var(--color-red);
+  color: var(--color-white);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+.latest-strip-list {
+  list-style: none;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.latest-strip-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+.latest-strip-item[hidden] { display: none; }
+.latest-strip-item a {
+  color: var(--color-ink);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.latest-strip-item a:hover {
+  color: var(--color-azure-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.latest-strip-time {
+  flex-shrink: 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+.latest-strip-item.is-active {
+  animation: strip-in 0.35s ease-out;
+}
+@keyframes strip-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.latest-strip-controls {
+  display: flex;
+  gap: var(--sp-1);
+  flex-shrink: 0;
+}
+.latest-strip-controls[hidden] { display: none; }
+.latest-strip-controls button {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  background: var(--color-white);
+  color: var(--color-body);
+  font-size: 0.875rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.latest-strip-controls .latest-strip-pause { font-size: 0.5625rem; }
+.latest-strip-controls button:hover {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+/* ---- Section reveal (only sections below the fold, set by site.js) ---- */
+.reveal {
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.reveal.reveal-pending {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* ---- Page transitions (browsers with cross-document View Transitions) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.18s;
+    animation-timing-function: ease-out;
+  }
+  .site-header { view-transition-name: site-header; }
+  .ticker { view-transition-name: ticker; }
+}
+
+/* ---- Hover states ---- */
+.figure-card {
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.figure-card:hover {
+  border-color: var(--color-border-dark);
+  background: var(--color-white);
+}
+.story-card {
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.story-card:hover {
+  transform: translateY(-1px);
+}
+.story-card h4 a,
+.lead-story h2 a,
+.latest-list h4 a,
+.section-articles-list h3 a {
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+.story-card h4 a:hover,
+.lead-story h2 a:hover,
+.latest-list h4 a:hover,
+.section-articles-list h3 a:hover {
+  text-decoration-color: currentColor;
+}
+.section-header .view-all {
+  transition: color 0.15s;
+}
+.section-header .view-all:hover {
+  color: var(--color-ink);
+}
+.newsletter-form button:active {
+  transform: translateY(1px);
+}
+.data-table tbody tr {
+  transition: background-color 0.15s;
+}
+.data-table tbody tr:hover {
+  background: var(--color-surface);
+}
+
+/* ---- Data page: figures + charts ---- */
+.key-figures--page {
+  padding-top: 0;
+  border-bottom: none;
+}
+.data-charts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin-top: var(--sp-10);
+}
+.chart-panel {
+  margin: 0;
+  padding: var(--sp-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-white);
+  transition: border-color 0.15s;
+  min-width: 0;
+}
+.chart-panel:hover {
+  border-color: var(--color-border-dark);
+}
+.chart-panel--wide {
+  grid-column: 1 / -1;
+}
+.chart-panel figcaption {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--sp-3);
+}
+.chart-box {
+  position: relative;
+  height: 260px;
+}
+.chart-box--small {
+  height: 160px;
+}
+.chart-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  background: var(--color-surface);
+}
+.data-table-title {
+  margin: var(--sp-12) 0 var(--sp-6);
+}
+.table-scroll {
+  overflow-x: auto;
+}
+.data-table tbody th[scope="row"] {
+  font-size: inherit;
+  font-weight: 500;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-border);
+}
+.data-table tr:hover th[scope="row"] {
+  background: var(--color-surface);
+}
+.data-page .figures-source {
+  margin-top: var(--sp-6);
+}
+
+/* ---- Skeleton loader (pulsing block, no gradient shimmer) ---- */
+.skeleton {
+  background: var(--color-surface);
+  border-radius: 2px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+.skeleton > canvas { visibility: hidden; }
+@keyframes skeleton-pulse {
+  0%, 100% { background-color: var(--color-surface); }
+  50%      { background-color: var(--color-border); }
+}
+
+@media (max-width: 1024px) {
+  .data-charts { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .latest-strip-time { display: none; }
+}
+@media (max-width: 480px) {
+  .data-charts { grid-template-columns: 1fr; }
+  .latest-strip-controls button[data-dir] { display: none; }
+}
+
+/* ---- Reduced motion: switch every animation and transition off ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ticker-track, .skeleton { animation: none !important; }
+  .story-card:hover { transform: none; }
+}
+
+/* ==========================================================================
+   Social channels + WhatsApp (main call to action)
+   Monochrome icons (currentColor); design-system colours only.
+   ========================================================================== */
+.social-links {
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-1);
+  list-style: none;
+}
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  color: var(--color-muted);
+  transition: color 0.15s, background-color 0.15s;
+}
+.social-links a:hover {
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
+.social-icon {
+  display: block;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Header */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.social-links--header {
+  gap: 0;
+}
+.social-links--header a {
+  width: 28px;
+  height: 28px;
+}
+
+/* Footer */
+.footer-follow {
+  margin-top: var(--sp-4);
+  margin-bottom: var(--sp-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink);
+}
+.social-links--footer {
+  margin-left: -6px;
+}
+.social-links--footer a {
+  width: 36px;
+  height: 36px;
+}
+.social-links--footer a:hover {
+  background: var(--color-white);
+}
+.footer-email {
+  margin-top: var(--sp-3);
+  font-size: 0.875rem;
+}
+
+/* WhatsApp button */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 9px var(--sp-4);
+  background: var(--color-azure-700);
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border-radius: var(--radius);
+  white-space: nowrap;
+  transition: background-color 0.15s, transform 0.15s;
+}
+.btn-whatsapp:hover {
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+.btn-whatsapp:active {
+  transform: translateY(1px);
+}
+.btn-whatsapp:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* Sticky button: phones only */
+.whatsapp-sticky {
+  display: none;
+}
+
+/* "Follow us on WhatsApp" block at the end of every article */
+.follow-block {
+  max-width: var(--content-max);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-6);
+  margin-top: var(--sp-8);
+  padding: var(--sp-6);
+  background: var(--color-azure-50);
+  border-left: 3px solid var(--color-azure-700);
+  border-radius: var(--radius);
+}
+.follow-block h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--color-ink);
+  margin-bottom: var(--sp-1);
+}
+.follow-block p {
+  font-size: 0.9375rem;
+  color: var(--color-body);
+  margin: 0;
+}
+.follow-block-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  flex-shrink: 0;
+}
+.btn-whatsapp:not(.btn-whatsapp--header) {
+  padding: 12px var(--sp-5);
+  font-size: 0.9375rem;
+}
+.follow-block-more {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 0.75rem;
+  color: var(--color-body);
+}
+.social-links--inline {
+  gap: 0;
+}
+.social-links--inline a {
+  color: var(--color-body);
+  width: 28px;
+  height: 28px;
+}
+.social-links--inline a:hover {
+  background: var(--color-white);
+}
+
+@media (max-width: 1180px) {
+  .social-links--header { display: none; }
+}
+@media (max-width: 960px) {
+  .header-date { display: none; }
+}
+@media (max-width: 768px) {
+  .header-right { display: none; }
+  .whatsapp-sticky {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    padding: var(--sp-2) var(--sp-4) calc(var(--sp-2) + env(safe-area-inset-bottom));
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border);
+  }
+  .btn-whatsapp--sticky {
+    display: flex;
+    width: 100%;
+  }
+  /* keep the footer readable above the sticky bar */
+  body { padding-bottom: 68px; }
+  .follow-block {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .follow-block-actions .btn-whatsapp { width: 100%; }
+}
+@media print {
+  .whatsapp-sticky, .header-right, .follow-block { display: none !important; }
+}
+
+/* Links inside running text are underlined (not distinguished by colour alone) */
+.static-page .page-content a,
+.article-body a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }

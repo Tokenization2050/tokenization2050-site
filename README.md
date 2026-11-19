@@ -58,6 +58,12 @@ stop the preview.
 
 After changing a content file, stop the preview and run `npm run serve` again to see it.
 
+**Preview with demo numbers:** `npm run preview` shows the site as it will look once
+figures and articles exist: the moving ticker, the "Latest" headline strip, counters and
+charts. It fills them with invented numbers from `dev/preview-data.json`, includes draft
+articles, and shows a yellow **PREVIEW ONLY** bar on every page. It runs only on your
+computer; the live site never uses it.
+
 Other commands:
 
 | Command         | What it does                                  |

@@ -29,7 +29,14 @@ The site publishes news, analysis, and data across the following sections:
 
 All content is produced by the Tokenization 2050 Editorial Team. Facts are sourced from official sources or at least two independent sources, and all sources are cited. All texts are reviewed by a human before publication. The site provides information, not financial advice.
 
+## Official channels
+
+Only the channels below are official (in order of priority). The WhatsApp channel is the main one.
+
+{{SOCIAL_LIST}}
+
 ## Contact
 
 - Website: https://www.tokenization2050.com
-- Email: editorial@tokenization2050.com
+- Email: {{CONTACT_EMAIL}}
+- Sitemap: https://www.tokenization2050.com/sitemap.xml

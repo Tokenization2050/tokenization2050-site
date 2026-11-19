@@ -1,7 +1,11 @@
 /* ==========================================================================
    Tokenization 2050 — Build Script
    Reads content JSON/Markdown, renders Nunjucks templates, outputs static HTML.
-   Usage: node build.js [--serve]
+   Usage: node build.js [--serve] [--preview]
+     --preview (only together with --serve, i.e. "npm run preview"):
+       local-only preview with DEMO numbers from dev/preview-data.json and
+       draft articles included, under a visible "PREVIEW ONLY" bar.
+       The live site (GitHub Actions runs "npm run build") never uses it.
    ========================================================================== */
 
 const fs = require('fs');
@@ -17,6 +21,13 @@ const CONTENT_DIR = path.join(ROOT, 'content');
 const TEMPLATE_DIR = path.join(ROOT, 'templates');
 const STATIC_DIR = path.join(ROOT, 'static');
 const OUTPUT_DIR = path.join(ROOT, 'site');
+
+const SERVE = process.argv.includes('--serve');
+const PREVIEW = process.argv.includes('--preview');
+if (PREVIEW && !SERVE) {
+  console.error('✗ --preview only works together with --serve (npm run preview). It is never used for the live site.');
+  process.exit(1);
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -98,6 +109,24 @@ function readingTime(text) {
   return Math.max(1, Math.round(words / 230));
 }
 
+/**
+ * Split a display value like "$24.5B" or "1,250" into parts for the
+ * animated counter: { prefix: "$", number: 24.5, decimals: 1, suffix: "B" }.
+ * Returns null when the value has no single number in it (then no animation).
+ */
+function parseCount(value) {
+  const m = String(value).trim().match(/^([^0-9-]*)(-?[0-9][0-9,]*(?:.[0-9]+)?)(.*)$/);
+  if (!m || /[0-9]/.test(m[3])) return null;
+  const numText = m[2].replace(/,/g, '');
+  return {
+    prefix: m[1],
+    number: Number(numText),
+    decimals: numText.includes('.') ? numText.split('.')[1].length : 0,
+    suffix: m[3],
+    grouped: m[2].includes(','),
+  };
+}
+
 /** Escape XML for feeds */
 function escapeXml(str) {
   return str
@@ -115,8 +144,43 @@ function escapeXml(str) {
 console.log('📦 Loading content...');
 
 const config = readJSON(path.join(CONTENT_DIR, 'config.json'));
-const data = readJSON(path.join(CONTENT_DIR, 'data.json'));
+const data = PREVIEW
+  ? readJSON(path.join(ROOT, 'dev', 'preview-data.json'))
+  : readJSON(path.join(CONTENT_DIR, 'data.json'));
+if (PREVIEW) console.log('  ⚠ PREVIEW MODE: demo numbers + drafts (local only, never published)');
 const glossaryData = readJSON(path.join(CONTENT_DIR, 'glossary.json'));
+
+// Social channels: only those listed in config.social are shown anywhere
+// (order = priority). Icons come from content/social-icons.json.
+const socialIcons = readJSON(path.join(CONTENT_DIR, 'social-icons.json'));
+const social = (config.social || [])
+  .filter((c) => c && c.name && c.url)
+  .map((c) => {
+    const key = c.name.toLowerCase();
+    if (!socialIcons[key]) console.warn(`  ⚠ No icon for social channel "${c.name}" (add it to content/social-icons.json)`);
+    return { ...c, key, icon: socialIcons[key] || null };
+  });
+const whatsapp = social.find((c) => c.key === 'whatsapp') || null;
+const socialOthers = social.filter((c) => c.key !== 'whatsapp');
+const contactEmail = config.site.contact_email || '';
+
+/**
+ * Placeholders usable in pages (content/pages/*.json) and static/llms.txt:
+ *   {{CONTACT_EMAIL}}  → config.site.contact_email
+ *   {{SOCIAL_LIST}}    → Markdown list of every channel in config.social
+ */
+function fillPlaceholders(text) {
+  const list = social.map((c) => `- **${c.name}**: [${c.url}](${c.url})`).join('\n');
+  return String(text)
+    .replace(/\{\{CONTACT_EMAIL\}\}/g, contactEmail)
+    .replace(/\{\{SOCIAL_LIST\}\}/g, list);
+}
+function fillPlaceholdersPlain(text) {
+  const list = social.map((c) => `- ${c.name}: ${c.url}`).join('\n');
+  return String(text)
+    .replace(/\{\{CONTACT_EMAIL\}\}/g, contactEmail)
+    .replace(/\{\{SOCIAL_LIST\}\}/g, list);
+}
 
 // Build section lookup
 const sectionMap = {};
@@ -134,7 +198,7 @@ if (fs.existsSync(articlesDir)) {
     try {
       const article = readJSON(path.join(articlesDir, file));
       // Drafts ("draft": true) are kept in content/ but never published
-      if (article.draft === true) {
+      if (article.draft === true && !PREVIEW) {
         draftCount++;
         continue;
       }
@@ -166,7 +230,7 @@ if (fs.existsSync(pagesDir)) {
     if (!file.endsWith('.json')) continue;
     try {
       const page = readJSON(path.join(pagesDir, file));
-      page.bodyHtml = marked(page.body || '', { breaks: false, gfm: true });
+      page.bodyHtml = marked(fillPlaceholders(page.body || ''), { breaks: false, gfm: true });
       pages.push(page);
     } catch (err) {
       console.error(`  ⚠ Error loading page ${file}:`, err.message);
@@ -190,6 +254,8 @@ const env = nunjucks.configure(TEMPLATE_DIR, {
 // Custom filters
 env.addFilter('formatDate', formatDate);
 env.addFilter('formatDateShort', formatDateShort);
+// JSON for a <script type="application/json"> block ("<" escaped so text can't close the tag)
+env.addFilter('jsonScript', (obj) => JSON.stringify(obj).replace(/</g, '\\u003c'));
 env.addFilter('urlencode', (str) => encodeURIComponent(str || ''));
 env.addFilter('truncate', (str, len) => {
   if (!str) return '';
@@ -219,11 +285,18 @@ if (fs.existsSync(path.join(STATIC_DIR, 'robots.txt'))) {
   );
 }
 if (fs.existsSync(path.join(STATIC_DIR, 'llms.txt'))) {
-  fs.copyFileSync(
-    path.join(STATIC_DIR, 'llms.txt'),
-    path.join(OUTPUT_DIR, 'llms.txt')
-  );
+  const llms = fillPlaceholdersPlain(fs.readFileSync(path.join(STATIC_DIR, 'llms.txt'), 'utf-8'));
+  writeOutput(path.join(OUTPUT_DIR, 'llms.txt'), llms);
+  // the copy under /assets keeps the raw placeholders; remove it
+  fs.rmSync(path.join(OUTPUT_DIR, 'assets', 'llms.txt'), { force: true });
 }
+
+// Self-hosted Chart.js (loaded only on the Data page, only when charts exist)
+fs.mkdirSync(path.join(OUTPUT_DIR, 'assets', 'vendor'), { recursive: true });
+fs.copyFileSync(
+  path.join(ROOT, 'node_modules', 'chart.js', 'dist', 'chart.umd.min.js'),
+  path.join(OUTPUT_DIR, 'assets', 'vendor', 'chart.umd.min.js')
+);
 
 // Custom domain for GitHub Pages (from config.site.url)
 writeOutput(path.join(OUTPUT_DIR, 'CNAME'), new URL(config.site.url).host + '\n');
@@ -238,11 +311,54 @@ const tickerItems = (data.ticker || []).filter(
 );
 
 // Key figures: same rule — only figures with a verified value are published
-const verifiedFigures = (data.keyFigures || []).filter(
-  (fig) => fig.value !== undefined && fig.value !== null && String(fig.value).trim() !== ''
-);
+const verifiedFigures = (data.keyFigures || [])
+  .filter((fig) => fig.value !== undefined && fig.value !== null && String(fig.value).trim() !== '')
+  .map((fig, i) => ({
+    ...fig,
+    id: 'fig-' + i,
+    count: parseCount(fig.value),
+    // Charts only from real history points: [{ "date": "2026-10-31", "value": 24.5 }, ...]
+    history: Array.isArray(fig.history)
+      ? fig.history.filter((p) => p && p.date && typeof p.value === 'number')
+      : [],
+  }));
 
-const common = { config, data, buildDate, sectionMap, tickerItems, verifiedFigures };
+// Data for the charts on the Data page (rendered by Chart.js in the browser).
+// Trend charts: one per figure with at least 2 history points.
+// Comparison bar chart: figures whose values share the same unit (e.g. "$…B").
+const chartData = { trends: [], comparison: null };
+for (const fig of verifiedFigures) {
+  if (fig.history.length >= 2) {
+    chartData.trends.push({ id: fig.id, label: fig.label, unit: fig.count ? fig.count.prefix + '|' + fig.count.suffix : '|', points: fig.history });
+  }
+}
+{
+  const units = {};
+  for (const fig of verifiedFigures) {
+    if (!fig.count || fig.count.suffix === '%') continue;
+    const unit = fig.count.prefix + '|' + fig.count.suffix;
+    (units[unit] = units[unit] || []).push(fig);
+  }
+  const best = Object.entries(units).sort((a, b) => b[1].length - a[1].length)[0];
+  if (best && best[1].length >= 2) {
+    chartData.comparison = {
+      unit: best[0],
+      labels: best[1].map((f) => f.label),
+      values: best[1].map((f) => f.count.number),
+    };
+  }
+}
+
+// Rotating "Latest" headline strip: the 5 newest published articles
+const latestHeadlines = articles.slice(0, 5).map((a) => ({
+  title: a.title.replace('[SAMPLE] ', ''),
+  url: '/' + a.section + '/' + a.id + '/',
+  sectionName: a.sectionName,
+  publishedAt: a.publishedAt,
+  timeAgo: timeAgo(a.publishedAt, Date.now()),
+}));
+
+const common = { config, data, buildDate, sectionMap, tickerItems, verifiedFigures, latestHeadlines, previewMode: PREVIEW, social, socialOthers, whatsapp, contactEmail };
 
 // Warn about menu entries in config.nav that don't match a section slug
 for (const slug of [...config.nav.primary, ...config.nav.secondary]) {
@@ -330,6 +446,8 @@ const dataPageHtml = nunjucks.render('data-page.njk', {
   ...common,
   pageTitle: 'Data',
   currentSection: 'data',
+  chartData,
+  hasCharts: chartData.trends.length > 0 || !!chartData.comparison,
 });
 writeOutput(path.join(OUTPUT_DIR, 'data', 'index.html'), dataPageHtml);
 
@@ -483,7 +601,7 @@ console.log(`\n✅ Build complete! ${fileCount} files written to site/`);
 // ---------------------------------------------------------------------------
 // Optional: local preview server
 // ---------------------------------------------------------------------------
-if (process.argv.includes('--serve')) {
+if (SERVE) {
   const http = require('http');
   const PORT = 8050;
 

@@ -1,3 +1,4 @@
+{% from "_macros.njk" import socialLinks, whatsappButton %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,26 +48,54 @@
   <link rel="stylesheet" href="/assets/css/fonts.css">
   <link rel="stylesheet" href="/assets/css/style.css">
 
+  {# schema.org Organization on every page; "sameAs" = every channel in config.social #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsMediaOrganization",
+    "@id": "{{ config.site.url }}/#organization",
+    "name": "Tokenization 2050",
+    "url": "{{ config.site.url }}",
+    "logo": { "@type": "ImageObject", "url": "{{ config.site.url }}{{ config.brand.icon512 }}", "width": 512, "height": 512 },
+    {% if contactEmail %}"email": "{{ contactEmail }}",{% endif %}
+    "sameAs": [{% for c in social %}"{{ c.url }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+  }
+  </script>
+
   {% block head %}{% endblock %}
+  <script src="/assets/js/site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  {% if previewMode %}
+  <div class="preview-banner" role="note">PREVIEW ONLY · demo numbers and draft articles on this computer · never published</div>
+  {% endif %}
 
   {# ---- TICKER STRIP ---- #}
   {# Only items with a verified value (filtered in build.js); hidden entirely when none #}
   {% if tickerItems and tickerItems.length > 0 %}
-  <div class="ticker" role="complementary" aria-label="Key market figures">
-    <div class="container">
-      <div class="ticker-inner">
-        {% for item in tickerItems %}
-        {% if not loop.first %}<span class="ticker-sep" aria-hidden="true">|</span>{% endif %}
-        <div class="ticker-item">
-          <span class="ticker-label">{{ item.label }}</span>
-          <span class="ticker-value">{{ item.value }}</span>
-          <span class="ticker-change {{ item.direction }}">{{ item.change }}</span>
+  {# Scrolls continuously (CSS). The second copy makes the loop seamless and is
+     hidden from screen readers. Pauses on hover/focus and with the button;
+     static and swipeable with prefers-reduced-motion. #}
+  <div class="ticker" role="region" aria-label="Key market figures" style="--ticker-duration: {{ tickerItems.length * 7 }}s">
+    <div class="ticker-viewport">
+      <div class="ticker-track">
+        {% for copy in [1, 2] %}
+        <div class="ticker-group"{% if copy === 2 %} aria-hidden="true"{% endif %}>
+          {% for item in tickerItems %}
+          <div class="ticker-item">
+            <span class="ticker-label">{{ item.label }}</span>
+            <span class="ticker-value tabular-nums">{{ item.value }}</span>
+            {% if item.change %}<span class="ticker-change {{ item.direction }} tabular-nums">{% if item.direction === 'up' %}▲{% elif item.direction === 'down' %}▼{% endif %} {{ item.change }}</span>{% endif %}
+          </div>
+          <span class="ticker-sep" aria-hidden="true">|</span>
+          {% endfor %}
         </div>
         {% endfor %}
       </div>
     </div>
+    <button type="button" class="ticker-pause" aria-pressed="false" hidden><span class="sr-only">Pause scrolling figures</span><span aria-hidden="true">❚❚</span></button>
   </div>
   {% endif %}
 
@@ -80,7 +109,11 @@
         <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); document.querySelector('.site-nav').classList.toggle('open');">
           ☰ Menu
         </button>
-        <span class="header-date">{{ buildDate }}</span>
+        <div class="header-right">
+          <span class="header-date">{{ buildDate }}</span>
+          {{ socialLinks(social, 16, "social-links--header") }}
+          {% if whatsapp %}{{ whatsappButton(whatsapp, "Follow on WhatsApp", "btn-whatsapp--header") }}{% endif %}
+        </div>
       </div>
 
       <nav class="site-nav" aria-label="Main navigation">
@@ -111,6 +144,32 @@
     </div>
   </header>
 
+  {# ---- LATEST HEADLINES STRIP ---- #}
+  {# Rotates through the newest headlines every 6 s (site.js). Without JS, or
+     with prefers-reduced-motion, it shows the newest one and the arrows. #}
+  {% if latestHeadlines and latestHeadlines.length > 0 %}
+  <div class="latest-strip" role="region" aria-label="Latest headlines">
+    <div class="container latest-strip-inner">
+      <span class="latest-strip-label">Latest</span>
+      <ul class="latest-strip-list">
+        {% for h in latestHeadlines %}
+        <li class="latest-strip-item{% if loop.first %} is-active{% endif %}"{% if not loop.first %} hidden{% endif %}>
+          <a href="{{ h.url }}">{{ h.title }}</a>
+          <time class="latest-strip-time" datetime="{{ h.publishedAt }}">{{ h.timeAgo }}</time>
+        </li>
+        {% endfor %}
+      </ul>
+      {% if latestHeadlines.length > 1 %}
+      <div class="latest-strip-controls" hidden>
+        <button type="button" data-dir="-1"><span class="sr-only">Previous headline</span><span aria-hidden="true">‹</span></button>
+        <button type="button" class="latest-strip-pause" aria-pressed="false"><span class="sr-only">Pause headlines</span><span aria-hidden="true">❚❚</span></button>
+        <button type="button" data-dir="1"><span class="sr-only">Next headline</span><span aria-hidden="true">›</span></button>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
   {# ---- MAIN CONTENT ---- #}
   <main id="main-content">
     {% block content %}{% endblock %}
@@ -125,11 +184,16 @@
             <img src="{{ config.brand.logo }}" alt="Tokenization 2050" width="{{ config.brand.logoWidth }}" height="{{ config.brand.logoHeight }}" loading="lazy">
           </a>
           <p>Global information provider on tokenization and real-world assets.</p>
+          {% if social.length %}
+          <p class="footer-follow">Follow Tokenization 2050</p>
+          {{ socialLinks(social, 20, "social-links--footer") }}
+          {% endif %}
+          {% if contactEmail %}<p class="footer-email"><a href="mailto:{{ contactEmail }}">{{ contactEmail }}</a></p>{% endif %}
         </div>
 
         <div class="footer-nav">
           <div class="footer-nav-group">
-            <h4>Sections</h4>
+            <h2>Sections</h2>
             <ul>
               {% for section in config.sections %}
               {% if section.slug !== 'data' and section.slug !== 'glossary' %}
@@ -139,7 +203,7 @@
             </ul>
           </div>
           <div class="footer-nav-group">
-            <h4>Company</h4>
+            <h2>Company</h2>
             <ul>
               <li><a href="/about/">About</a></li>
               <li><a href="/editorial-standards/">Editorial Standards</a></li>
@@ -161,23 +225,10 @@
     </div>
   </footer>
 
-  {# "More" menu: open/close on click, close on Escape or click outside #}
-  <script>
-  (function () {
-    var item = document.querySelector('.nav-more');
-    if (!item) return;
-    var btn = item.querySelector('.nav-more-toggle');
-    function setOpen(open) {
-      item.classList.toggle('open', open);
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-    btn.addEventListener('click', function () { setOpen(!item.classList.contains('open')); });
-    document.addEventListener('click', function (e) { if (!item.contains(e.target)) setOpen(false); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && item.classList.contains('open')) { setOpen(false); btn.focus(); }
-    });
-  })();
-  </script>
+  {# Sticky WhatsApp button, phones only (CSS) #}
+  {% if whatsapp %}
+  <div class="whatsapp-sticky">{{ whatsappButton(whatsapp, "Follow on WhatsApp", "btn-whatsapp--sticky") }}</div>
+  {% endif %}
 
 </body>
 </html>

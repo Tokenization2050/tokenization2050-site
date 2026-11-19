@@ -32,7 +32,8 @@
 
 | Name | Hex | Usage |
 |------|-----|-------|
-| **Green** | `#059669` | Positive change indicators (↑) |
+| **Green** | `#059669` | Positive change indicators (↑), large text and graphics |
+| **Green (text)** | `#047857` | Positive change in small text (13px and under): meets 4.5:1 contrast on White and Surface |
 | **Red** | `#DC2626` | Negative change indicators (↓), breaking/urgent labels |
 | **Amber** | `#D97706` | Cautionary/neutral indicators |
 
@@ -167,6 +168,20 @@ Base unit: **4px**
 - Three-column: brand + description | nav group 1 | nav group 2
 - Disclaimer in small muted text
 - Copyright line
+
+---
+
+### Motion
+Calm and functional, never decorative. Everything is switched off with `prefers-reduced-motion`.
+- **Ticker**: scrolls continuously (≈7 s per item), pauses on hover, keyboard focus and with its pause button. Shown only when `content/data.json` has verified values.
+- **Latest strip**: rotates the 5 newest headlines every 6 s, with previous / pause / next buttons. Red "Latest" label.
+- **Key figures**: values count up once (1.1 s, ease-out) when scrolled into view, ending on the exact published value.
+- **Charts** (Data page): Chart.js, self-hosted, loaded only when the charts scroll into view. Azure 700 lines and bars, Inter, no gradients or fills. A pulsing skeleton holds the space until drawn.
+- **Sections**: sections below the fold fade up 12px on first view (0.5 s).
+- **Page transitions**: 0.18 s cross-fade between pages (browsers with View Transitions); header and ticker stay put.
+- **Hover**: border darkens, headline underline fades in, cards lift 1px. Transitions 0.15 s.
+
+Code: `static/js/site.js` (no cookies, no tracking), styles at the end of `static/css/style.css`.
 
 ---
 

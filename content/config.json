@@ -6,7 +6,8 @@
     "byline": "Tokenization 2050 Editorial Team",
     "language": "en",
     "copyright": "© 2026 Tokenization 2050. All rights reserved.",
-    "disclaimer": "The information on this site is provided for informational purposes only and does not constitute financial, investment, legal, or tax advice. Always consult a qualified professional before making financial decisions."
+    "disclaimer": "The information on this site is provided for informational purposes only and does not constitute financial, investment, legal, or tax advice. Always consult a qualified professional before making financial decisions.",
+    "contact_email": "info@tokenization2050.com"
   },
   "sections": [
     {
@@ -97,5 +98,35 @@
     "shareImageWidth": 800,
     "shareImageHeight": 800,
     "themeColor": "#FFFFFF"
-  }
+  },
+  "social": [
+    {
+      "name": "WhatsApp",
+      "url": "https://whatsapp.com/channel/0029VbEAx0NCRs1wKrkrjc21"
+    },
+    {
+      "name": "Telegram",
+      "url": "https://t.me/tokenization2050"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/company/tokenization2050"
+    },
+    {
+      "name": "X",
+      "url": "https://x.com/Tokenization50"
+    },
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com/channel/UC0fFm4KOcG0x25zvtpGBxUg"
+    },
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/profile.php?id=61596735539100"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/Tokenization2050"
+    }
+  ]
 }

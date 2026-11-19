@@ -1,4 +1,5 @@
 {% extends "base.njk" %}
+{% from "_macros.njk" import socialLinks, whatsappButton %}
 
 {% block title %}{{ article.title | replace("[SAMPLE] ", "") }} — Tokenization 2050{% endblock %}
 {% block description %}{{ article.summary }}{% endblock %}
@@ -25,7 +26,8 @@
     "name": "{{ config.site.byline }}"
   },
   "publisher": {
-    "@type": "Organization",
+    "@type": "NewsMediaOrganization",
+    "@id": "{{ config.site.url }}/#organization",
     "name": "Tokenization 2050",
     "url": "{{ config.site.url }}",
     "logo": {
@@ -101,10 +103,27 @@
     {# Share #}
     <div class="article-share">
       <span>Share</span>
-      <a class="share-link" href="https://twitter.com/intent/tweet?url={{ config.site.url }}/{{ article.section }}/{{ article.id }}/&text={{ article.title | replace("[SAMPLE] ", "") | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">𝕏</a>
+      <a class="share-link" href="https://twitter.com/intent/tweet?url={{ config.site.url }}/{{ article.section }}/{{ article.id }}/&text={{ article.title | replace("[SAMPLE] ", "") | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X"><span aria-hidden="true">𝕏</span></a>
       <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url={{ config.site.url }}/{{ article.section }}/{{ article.id }}/" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">LinkedIn</a>
       <button class="share-link" onclick="navigator.clipboard.writeText('{{ config.site.url }}/{{ article.section }}/{{ article.id }}/'); this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy link', 2000);" aria-label="Copy link">Copy link</button>
     </div>
+
+    {# Follow block: WhatsApp is the main call to action #}
+    {% if whatsapp %}
+    <aside class="follow-block" aria-labelledby="follow-title">
+      <div class="follow-block-text">
+        <h2 id="follow-title">Follow us on WhatsApp</h2>
+        <p>Get the day's key tokenization and RWA news on your phone. Free, no spam, leave any time.</p>
+      </div>
+      <div class="follow-block-actions">
+        {{ whatsappButton(whatsapp, "Follow on WhatsApp") }}
+        <div class="follow-block-more">
+          <span>Also on</span>
+          {{ socialLinks(socialOthers, 18, "social-links--inline") }}
+        </div>
+      </div>
+    </aside>
+    {% endif %}
 
   </article>
 

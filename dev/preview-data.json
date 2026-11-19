@@ -1,0 +1,393 @@
+{
+  "_README": "DEMO NUMBERS FOR LOCAL PREVIEW ONLY (npm run preview). Invented values - never published. Real figures go in content/data.json.",
+  "updatedAt": "2026-11-15T12:00:00Z",
+  "source": "DEMO DATA (not real)",
+  "ticker": [
+    {
+      "label": "Total RWA",
+      "value": "$20.0B",
+      "change": "+2.0%",
+      "direction": "up"
+    },
+    {
+      "label": "Tokenized Treasuries",
+      "value": "$8.0B",
+      "change": "+2.0%",
+      "direction": "up"
+    },
+    {
+      "label": "Private Credit",
+      "value": "$12.0B",
+      "change": "-1.0%",
+      "direction": "down"
+    },
+    {
+      "label": "Stablecoins",
+      "value": "$200B",
+      "change": "+2.0%",
+      "direction": "up"
+    },
+    {
+      "label": "Bonds & Credit",
+      "value": "$5.0B",
+      "change": "+2.0%",
+      "direction": "up"
+    },
+    {
+      "label": "Real Estate",
+      "value": "$3.0B",
+      "change": "-1.0%",
+      "direction": "down"
+    }
+  ],
+  "keyFigures": [
+    {
+      "label": "Total Tokenized RWA",
+      "value": "$20.0B",
+      "change": "+2.0%",
+      "direction": "up",
+      "period": "30d",
+      "note": "Excludes stablecoins",
+      "history": [
+        {
+          "date": "2025-12-31",
+          "value": 13.72
+        },
+        {
+          "date": "2026-01-31",
+          "value": 14.55
+        },
+        {
+          "date": "2026-02-28",
+          "value": 15.39
+        },
+        {
+          "date": "2026-03-31",
+          "value": 15.32
+        },
+        {
+          "date": "2026-04-30",
+          "value": 16.18
+        },
+        {
+          "date": "2026-05-31",
+          "value": 17.06
+        },
+        {
+          "date": "2026-06-30",
+          "value": 16.93
+        },
+        {
+          "date": "2026-07-31",
+          "value": 17.82
+        },
+        {
+          "date": "2026-08-31",
+          "value": 18.73
+        },
+        {
+          "date": "2026-09-30",
+          "value": 18.53
+        },
+        {
+          "date": "2026-10-31",
+          "value": 19.45
+        },
+        {
+          "date": "2026-11-15",
+          "value": 20.4
+        }
+      ]
+    },
+    {
+      "label": "Tokenized Treasuries & MMFs",
+      "value": "$8.0B",
+      "change": "+2.0%",
+      "direction": "up",
+      "period": "30d",
+      "note": "Including BUIDL, BENJI, OUSG",
+      "history": [
+        {
+          "date": "2025-12-31",
+          "value": 5.6
+        },
+        {
+          "date": "2026-01-31",
+          "value": 5.93
+        },
+        {
+          "date": "2026-02-28",
+          "value": 5.92
+        },
+        {
+          "date": "2026-03-31",
+          "value": 6.25
+        },
+        {
+          "date": "2026-04-30",
+          "value": 6.6
+        },
+        {
+          "date": "2026-05-31",
+          "value": 6.56
+        },
+        {
+          "date": "2026-06-30",
+          "value": 6.91
+        },
+        {
+          "date": "2026-07-31",
+          "value": 7.27
+        },
+        {
+          "date": "2026-08-31",
+          "value": 7.2
+        },
+        {
+          "date": "2026-09-30",
+          "value": 7.56
+        },
+        {
+          "date": "2026-10-31",
+          "value": 7.94
+        },
+        {
+          "date": "2026-11-15",
+          "value": 7.84
+        }
+      ]
+    },
+    {
+      "label": "Private Credit",
+      "value": "$12.0B",
+      "change": "-1.0%",
+      "direction": "down",
+      "period": "30d",
+      "note": "Centrifuge, Maple, Goldfinch",
+      "history": [
+        {
+          "date": "2025-12-31",
+          "value": 8.57
+        },
+        {
+          "date": "2026-01-31",
+          "value": 8.55
+        },
+        {
+          "date": "2026-02-28",
+          "value": 9.05
+        },
+        {
+          "date": "2026-03-31",
+          "value": 9.57
+        },
+        {
+          "date": "2026-04-30",
+          "value": 9.51
+        },
+        {
+          "date": "2026-05-31",
+          "value": 10.04
+        },
+        {
+          "date": "2026-06-30",
+          "value": 10.57
+        },
+        {
+          "date": "2026-07-31",
+          "value": 10.48
+        },
+        {
+          "date": "2026-08-31",
+          "value": 11.02
+        },
+        {
+          "date": "2026-09-30",
+          "value": 11.57
+        },
+        {
+          "date": "2026-10-31",
+          "value": 11.44
+        },
+        {
+          "date": "2026-11-15",
+          "value": 12
+        }
+      ]
+    },
+    {
+      "label": "Stablecoin Market Cap",
+      "value": "$200B",
+      "change": "+2.0%",
+      "direction": "up",
+      "period": "30d",
+      "note": "USDT, USDC, DAI, PYUSD",
+      "history": [
+        {
+          "date": "2025-12-31",
+          "value": 137.2
+        },
+        {
+          "date": "2026-01-31",
+          "value": 145.45
+        },
+        {
+          "date": "2026-02-28",
+          "value": 153.93
+        },
+        {
+          "date": "2026-03-31",
+          "value": 153.24
+        },
+        {
+          "date": "2026-04-30",
+          "value": 161.82
+        },
+        {
+          "date": "2026-05-31",
+          "value": 170.62
+        },
+        {
+          "date": "2026-06-30",
+          "value": 169.27
+        },
+        {
+          "date": "2026-07-31",
+          "value": 178.18
+        },
+        {
+          "date": "2026-08-31",
+          "value": 187.31
+        },
+        {
+          "date": "2026-09-30",
+          "value": 185.31
+        },
+        {
+          "date": "2026-10-31",
+          "value": 194.55
+        },
+        {
+          "date": "2026-11-15",
+          "value": 204
+        }
+      ]
+    },
+    {
+      "label": "Tokenized Bonds",
+      "value": "$5.0B",
+      "change": "+2.0%",
+      "direction": "up",
+      "period": "30d",
+      "note": "Corporate and sovereign",
+      "history": [
+        {
+          "date": "2025-12-31",
+          "value": 3.5
+        },
+        {
+          "date": "2026-01-31",
+          "value": 3.71
+        },
+        {
+          "date": "2026-02-28",
+          "value": 3.7
+        },
+        {
+          "date": "2026-03-31",
+          "value": 3.91
+        },
+        {
+          "date": "2026-04-30",
+          "value": 4.13
+        },
+        {
+          "date": "2026-05-31",
+          "value": 4.1
+        },
+        {
+          "date": "2026-06-30",
+          "value": 4.32
+        },
+        {
+          "date": "2026-07-31",
+          "value": 4.54
+        },
+        {
+          "date": "2026-08-31",
+          "value": 4.5
+        },
+        {
+          "date": "2026-09-30",
+          "value": 4.73
+        },
+        {
+          "date": "2026-10-31",
+          "value": 4.96
+        },
+        {
+          "date": "2026-11-15",
+          "value": 4.9
+        }
+      ]
+    },
+    {
+      "label": "Tokenized Real Estate",
+      "value": "$3.0B",
+      "change": "-1.0%",
+      "direction": "down",
+      "period": "30d",
+      "note": "Commercial and residential",
+      "history": [
+        {
+          "date": "2025-12-31",
+          "value": 2.14
+        },
+        {
+          "date": "2026-01-31",
+          "value": 2.14
+        },
+        {
+          "date": "2026-02-28",
+          "value": 2.26
+        },
+        {
+          "date": "2026-03-31",
+          "value": 2.39
+        },
+        {
+          "date": "2026-04-30",
+          "value": 2.38
+        },
+        {
+          "date": "2026-05-31",
+          "value": 2.51
+        },
+        {
+          "date": "2026-06-30",
+          "value": 2.64
+        },
+        {
+          "date": "2026-07-31",
+          "value": 2.62
+        },
+        {
+          "date": "2026-08-31",
+          "value": 2.75
+        },
+        {
+          "date": "2026-09-30",
+          "value": 2.89
+        },
+        {
+          "date": "2026-10-31",
+          "value": 2.86
+        },
+        {
+          "date": "2026-11-15",
+          "value": 3
+        }
+      ]
+    }
+  ]
+}
